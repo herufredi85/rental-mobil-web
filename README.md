@@ -1,5 +1,7 @@
 
-   
+### Requirement
+
+Mysql & PHP 7.4
 
 ### Instalasi & Konfigurasi
 
