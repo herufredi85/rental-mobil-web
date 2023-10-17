@@ -2,13 +2,13 @@
 
 class M_Merk extends Model{
 	public function tambah($data){
-		$query = $this->insert('tbl_merk', ['merk' => $data]);
+		$query = $this->insert('tbl_merk', ['merk' => $data,'id_perusahaanref'=>$_SESSION['login']['id_perusahaanref']]);
 		$query = $this->execute();
 		return $query;
 	}
 
 	public function lihat(){
-		$query = $this->get('tbl_merk');
+		$query = $this->get_where('tbl_merk',['id_perusahaanref'=>$_SESSION['login']['id_perusahaanref']]);
 		$query = $this->execute();
 		return $query;
 	}

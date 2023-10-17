@@ -1,14 +1,20 @@
 <?php 
 
-class M_Akun extends Model {
+class M_Perusahaan extends Model {
 	public function lihat(){
+		$query = $this->get_where('tperusahaan',['id_perusahaan'=>$_SESSION['login']['id_perusahaanref']]);
+		$query = $this->execute();
+		return $query;
+	}
+
+    public function lihat2(){
 		$query = $this->get_where('tbl_akun',['id_perusahaanref'=>$_SESSION['login']['id_perusahaanref']], ['nama', 'username', 'id']);
 		$query = $this->execute();
 		return $query;
 	}
 
-	public function tambah($data){
-		$query = $this->insert('tbl_akun', $data);
+	public function ubah($data,$id){
+		$query = $this->update('tperusahaan', $data, ['id_perusahaan' => $id]);
 		$query = $this->execute();
 		return $query;
 	}

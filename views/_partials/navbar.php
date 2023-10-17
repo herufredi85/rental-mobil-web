@@ -45,40 +45,57 @@
             <span>Data Pemesan</span>
         </a>
     </li>
-    <li class="nav-item <?= $data == 'jenis_bayar' ? 'active' : '' ?>">
+    <!-- <li class="nav-item <?= $data == 'jenis_bayar' ? 'active' : '' ?>">
         <a class="nav-link" href="<?= base_url('jenis_bayar') ?>">
             <i class="fas fa-fw fa-dollar-sign"></i>
             <span>Data Jenis Bayar</span>
         </a>
-    </li>
-    
-    <hr class="sidebar-divider">
-    <div class="sidebar-heading">
-        Master Pesanan
-    </div>
-
+    </li> -->
     <li class="nav-item <?= $data == 'perjalanan' ? 'active' : '' ?>">
         <a class="nav-link" href="<?= base_url('perjalanan') ?>">
             <i class="fas fa-fw fa-street-view"></i>
             <span>Data Perjalanan</span>
         </a>
     </li>
+    <hr class="sidebar-divider">
+    <div class="sidebar-heading">
+        Transaksi
+    </div>
     <li class="nav-item <?= $data == 'pesanan' ? 'active' : '' ?>">
-        <a class="nav-link" href="<?= base_url('pesanan') ?>">
+        <a class="nav-link" href="<?= base_url('pesanan/indextgl/01'.date('-m-Y').'/'.date('d-m-Y')) ?>">
             <i class="fas fa-fw fa-receipt"></i>
             <span>Data Pesanan</span>
         </a>
     </li>
-
+    <li class="nav-item <?= $data == 'pesanan' ? 'active' : '' ?>">
+        <a class="nav-link" href="<?= base_url('uangkeluar/indextgl/01'.date('-m-Y').'/'.date('d-m-Y')) ?>">
+            <i class="fas fa-fw fa-receipt"></i>
+            <span>Data Pengeluaran</span>
+        </a>
+    </li>
+    <hr class="sidebar-divider">
+    <div class="sidebar-heading">
+        Laporan
+    </div>
+    <li class="nav-item <?= $data == 'rekap' ? 'active' : '' ?>">
+        <a class="nav-link" href="<?= base_url('rekap/indextgl/01'.date('-m-Y').'/'.date('d-m-Y')) ?>">
+            <i class="fas fa-fw fa-receipt"></i>
+            <span>Rekap Transaksi</span>
+        </a>
+    </li>
     <hr class="sidebar-divider">
     <div class="sidebar-heading">
         Pengaturan
     </div>
 
     <li class="nav-item <?= $data == 'akun' ? 'active' : '' ?>">
-        <a class="nav-link" href="<?= base_url('akun') ?>">
+        <!-- <a class="nav-link" href="<?= base_url('akun') ?>">
             <i class="fas fa-fw fa-cog"></i>
             <span>Manajemen Akun</span>
+        </a> -->
+        <a class="nav-link" href="<?= base_url('perusahaan') ?>">
+            <i class="fas fa-fw fa-cog"></i>
+            <span>Manajemen Perusahaan</span>
         </a>
     </li>
 

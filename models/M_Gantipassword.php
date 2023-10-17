@@ -1,6 +1,6 @@
 <?php 
 
-class M_Akun extends Model {
+class M_Gantipassword extends Model {
 	public function lihat(){
 		$query = $this->get_where('tbl_akun',['id_perusahaanref'=>$_SESSION['login']['id_perusahaanref']], ['nama', 'username', 'id']);
 		$query = $this->execute();
@@ -9,6 +9,11 @@ class M_Akun extends Model {
 
 	public function tambah($data){
 		$query = $this->insert('tbl_akun', $data);
+		$query = $this->execute();
+		return $query;
+	}
+	public function ubah($data,$id){
+		$query = $this->update('tbl_akun', $data, ['id' => $id]);
 		$query = $this->execute();
 		return $query;
 	}

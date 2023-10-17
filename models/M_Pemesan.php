@@ -2,7 +2,8 @@
 
 class M_Pemesan extends Model {
 	public function lihat(){
-		$query = $this->get('tbl_pemesan', ['nama', 'jenis_kelamin', 'id']);
+		//$query = $this->get('tbl_pemesan', ['nama', 'jenis_kelamin', 'id']);
+		$query = $this->get_where('tbl_pemesan',['id_perusahaanref'=>$_SESSION['login']['id_perusahaanref']], ['nama', 'jenis_kelamin', 'id']);
 		$query = $this->execute();
 		return $query;
 	}

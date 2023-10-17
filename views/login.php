@@ -33,7 +33,7 @@
 							<div class="col">
 								<div class="p-5">
 									<div class="text-center">
-										<h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
+										<h1 class="h4 text-gray-900 mb-4">Aplikasi Rental Mobil</h1>
 									</div>
 									<?php if(checkSession('success')): ?>
 										<div class="alert alert-success alert-dismissible fade show" role="alert">

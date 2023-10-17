@@ -53,17 +53,31 @@ class C_Mobil extends Controller{
 					'no_polisi' => $this->req->post('no_polisi'),
 					'tahun_beli' => $this->req->post('tahun_beli'),
 					'gambar' => $img_name . '.' . $ekstensi,
+					'id_perusahaanref'=>$_SESSION['login']['id_perusahaanref']
 				];
 
-				if($this->mobil->tambah($data)){
-					setSession('success', 'Data berhasil ditambahkan!');
-					redirect('mobil');
-				} else {
-					setSession('error', 'Data gagal ditambahkan!');
-					redirect('mobil');
-				}
+				
 			} else die('gagal upload gambar');
-		} else die('gambar error');
+		} else{
+			$data = [
+				'id_merk' => $this->req->post('id_merk'),
+				'nama' => $this->req->post('nama'),
+				'warna' => $this->req->post('warna'),
+				'jumlah_kursi' => $this->req->post('jumlah_kursi'),
+				'no_polisi' => $this->req->post('no_polisi'),
+				'tahun_beli' => $this->req->post('tahun_beli'),
+				//'gambar' => $img_name . '.' . $ekstensi,
+				'id_perusahaanref'=>$_SESSION['login']['id_perusahaanref']
+			];
+
+		} //die('gambar error');
+		if($this->mobil->tambah($data)){
+			setSession('success', 'Data berhasil ditambahkan!');
+			redirect('mobil');
+		} else {
+			setSession('error', 'Data gagal ditambahkan!');
+			redirect('mobil');
+		}
 	}
 
 	public function detail($id){
@@ -104,28 +118,47 @@ class C_Mobil extends Controller{
 		$img_name = str_replace(' ', '-', $img_name);
 		$img_name = $img_name . '-' . time();
 
-		$data = [
-			'id_merk' => $this->req->post('id_merk'),
-			'nama' => $this->req->post('nama'),
-			'warna' => $this->req->post('warna'),
-			'jumlah_kursi' => $this->req->post('jumlah_kursi'),
-			'no_polisi' => $this->req->post('no_polisi'),
-			'tahun_beli' => $this->req->post('tahun_beli'),
-			'gambar' => $img_name . '.' . $ekstensi,
-		];
+		if($error == 0){
 
-		$gambar_sebelumnya = $this->mobil->detail($id)->fetch_object()->gambar;
-
-		if($this->mobil->ubah($data, $id)){
-			unlink($upload_dir . $gambar_sebelumnya) or die('gagal hapus gambar lama');
-			if($error == 0){
-				if(file_exists($upload_dir . $img_name . '.' . $ekstensi)) unlink($upload_dir . $img_name . '.' . $ekstensi);
+			$data = [
+				'id_merk' => $this->req->post('id_merk'),
+				'nama' => $this->req->post('nama'),
+				'warna' => $this->req->post('warna'),
+				'jumlah_kursi' => $this->req->post('jumlah_kursi'),
+				'no_polisi' => $this->req->post('no_polisi'),
+				'tahun_beli' => $this->req->post('tahun_beli'),
+				'gambar' => $img_name . '.' . $ekstensi,
+			];
+	
+			$gambar_sebelumnya = $this->mobil->detail($id)->fetch_object()->gambar;
+			if($gambar_sebelumnya!=""){
+				unlink($upload_dir . $gambar_sebelumnya) or die('gagal hapus gambar lama');
+			}
+			
+			if(file_exists($upload_dir . $img_name . '.' . $ekstensi)) unlink($upload_dir . $img_name . '.' . $ekstensi);
 			
 				if(move_uploaded_file($asal, $upload_dir . $img_name . '.' . $ekstensi)){
-					setSession('success', 'Data berhasil diubah!');
-					redirect('mobil');
+					//setSession('success', 'Data berhasil diubah!');
+					//redirect('mobil');
 				} else die('gagal upload gambar');
-			} else die('gambar error');
+
+		}else{
+			$data = [
+				'id_merk' => $this->req->post('id_merk'),
+				'nama' => $this->req->post('nama'),
+				'warna' => $this->req->post('warna'),
+				'jumlah_kursi' => $this->req->post('jumlah_kursi'),
+				'no_polisi' => $this->req->post('no_polisi'),
+				'tahun_beli' => $this->req->post('tahun_beli'),
+				
+			];
+		}
+		
+
+		if($this->mobil->ubah($data, $id)){
+			setSession('success', 'Data berhasil diubah!');
+			redirect('mobil');
+		;
 		} else {
 			setSession('error', 'Data gagal diubah!');
 			redirect('mobil');
@@ -136,7 +169,10 @@ class C_Mobil extends Controller{
 		if(!isset($id) || $this->mobil->cek($id)->num_rows == 0) redirect('mobil');
 
 		$gambar	= $this->mobil->detail($id)->fetch_object()->gambar;
-		unlink(BASEPATH . DS . 'uploads' . DS . $gambar) or die('gagal hapus gambar!');
+		if($gambar!=""){
+			unlink(BASEPATH . DS . 'uploads' . DS . $gambar) or die('gagal hapus gambar!');
+		}
+		
 		if($this->mobil->hapus($id)){
 			setSession('success', 'Data berhasil dihapus!');
 			redirect('mobil');

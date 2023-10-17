@@ -31,6 +31,7 @@ class C_Perjalanan extends Controller {
 			'asal' => $this->req->post('asal'),
 			'tujuan' => $this->req->post('tujuan'),
 			'jarak' => $this->req->post('jarak'),
+			'id_perusahaanref'=>$_SESSION['login']['id_perusahaanref']
 		];
 
 		if($this->perjalanan->tambah($data)){

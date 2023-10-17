@@ -81,7 +81,7 @@
 								  	</div>
 								  	<div class="form-group">
 								  		<label for="gambar">Gambar Mobil</label>
-								  		<input type="file" name="gambar" id="gambar" required="required" placeholder="ketik" autocomplete="off" class="form-control-file">
+								  		<input type="file" name="gambar" id="gambar"  placeholder="ketik" autocomplete="off" class="form-control-file">
 								  	</div>
 								  	<div class="form-group">
 										<button type="submit" class="btn btn-sm btn-success" name="tambah"><i class="fa fa-plus"></i> Tambah</button>

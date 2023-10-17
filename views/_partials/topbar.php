@@ -11,6 +11,10 @@
             <img class="img-profile rounded-circle" src="<?= base_url('uploads') . '/' . $_SESSION['login']['foto'] ?>">
             </a>
             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+            <a class="dropdown-item" href="<?=base_url('gantipassword')?>" >
+                <i class="fas fa-key fa-sm fa-fw mr-2 text-gray-400"></i>
+                Ganti Password
+            </a>
             <a class="dropdown-item" href="<?= base_url('auth/logout') ?>" onclick="return confirm('apakah anda yakin?')">
                 <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                 Logout

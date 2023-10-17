@@ -35,7 +35,9 @@ class C_Auth extends Controller{
 						'nama' => $akun->nama,
 						'username' => $akun->username,
 						'foto' => $akun->foto,
-						'waktu' => date('d M Y H:i:s')
+						'waktu' => date('d M Y H:i:s'),
+						'id_perusahaanref' => $akun->id_perusahaanref,
+						'userid' => $akun->id,
 					]);
 					redirect('dashboard');
 				} else {

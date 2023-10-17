@@ -11,6 +11,7 @@
 	<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 	<link href="<?= base_url('sb-admin-2/') ?>/css/sb-admin-2.min.css" rel="stylesheet">
 	<link href="<?= base_url('sb-admin-2/') ?>/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
 </head>
 
 <body id="page-top">
@@ -46,7 +47,7 @@
 								<h6 class="m-0 font-weight-bold text-primary">Ubah Data</h6>
 							</div>
 							<div class="card-body">
-								<form method="POST" action="<?= base_url('pesanan/proses_ubah/' . $pesanan->id) ?>" enctype="multipart/form-data">
+								<form method="POST" action="<?= base_url('pesanan/proses_ubah/' . $pesanan->id.'/'.$tglstart.'/'.$tglend) ?>" enctype="multipart/form-data">
 								  	<div class="form-group">
 								  		<label for="id_pemesan">Nama Pemesan</label>
 								  		<input type="text" disabled="disabled" class="form-control" value="<?= $pemesan->nama ?>">
@@ -72,7 +73,7 @@
 								  		<div class="col-md-6">
 								  			<div class="form-group">
 										  		<label for="harga">Harga</label>
-										  		<input type="number" name="harga" id="harga" value="<?= $pesanan->harga ?>" placeholder="ketik" required="required" autocomplete="off" class="form-control">
+										  		<input type="text" maxlength="15" onkeyup="FormatCurrency(this)" style="text-align: right;" name="harga" id="harga" value="<?= number_format($pesanan->harga,0,',','.') ?>" placeholder="ketik" required="required" autocomplete="off" class="form-control">
 										  	</div>
 								  		</div>
 								  	</div>
@@ -81,20 +82,20 @@
 										<div class="col-md-6">
 											<div class="form-group">
 										  		<label for="tgl_pinjam">Tanggal Pinjam</label>
-										  		<input type="date" value="<?= $pesanan->tgl_pinjam ?>" disabled="disabled" name="tgl_pinjam" id="tgl_pinjam" required="required" autocomplete="off" class="form-control">
+										  		<input type="text" value="<?=date('d-m-Y',strtotime($pesanan->tgl_pinjam))?>" disabled="disabled" name="tgl_pinjam" id="tgl_pinjam" required="required" autocomplete="off" class="form-control">
 										  	</div>
 									  	</div>
 										<div class="col-md-6">
 											<div class="form-group">
 										  		<label for="tgl_kembali">Tanggal Kembali</label>
-										  		<input type="date" name="tgl_kembali" value="<?= $pesanan->tgl_kembali ?>" id="tgl_kembali" required="required" autocomplete="off" class="form-control">
+										  		<input type="text" data-provide="datepicker" data-date-format="dd-mm-yyyy" data-date-autoclose="true"  name="tgl_kembali" value="<?=date('d-m-Y',strtotime($pesanan->tgl_kembali))?>" id="tgl_kembali" required="required" autocomplete="off" class="form-control">
 										  	</div>
 									  	</div>
 									</div>
 								  	<div class="form-group">
 										<button type="submit" class="btn btn-sm btn-success" name="ubah"><i class="fa fa-pen"></i> Ubah</button>
 										<button type="reset" class="btn btn-sm btn-danger"><i class="fa fa-times"></i> Batal</button>
-										<a href="index.php" class="btn btn-sm btn-secondary"><i class="fa fa-reply"></i> Kembali</a>
+										<a href="<?=base_url('pesanan/indextgl/'.$tglstart.'/'.$tglend)?>" class="btn btn-sm btn-secondary"><i class="fa fa-reply"></i> Kembali</a>
 								  	</div>
 								</form>
 							</div>
@@ -120,6 +121,7 @@
 	<script src="<?= base_url('sb-admin-2/') ?>/vendor/datatables/jquery.dataTables.min.js"></script>
   	<script src="<?= base_url('sb-admin-2/') ?>/vendor/datatables/dataTables.bootstrap4.min.js"></script>
 	<script src="<?= base_url('sb-admin-2/') ?>/js/demo/datatables-demo.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
 </body>
 
 </html>

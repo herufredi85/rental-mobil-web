@@ -8,7 +8,27 @@ class M_Pesanan extends Model{
 	}
 
 	public function lihat(){
-		$query = $this->setQuery("SELECT tbl_pesanan.id, tbl_pemesan.nama AS nama_pemesan, tbl_mobil.nama AS nama_mobil, tbl_jenis_bayar.jenis_bayar FROM tbl_pesanan INNER JOIN tbl_pemesan ON tbl_pesanan.id_pemesan = tbl_pemesan.id INNER JOIN tbl_mobil ON tbl_pesanan.id_mobil = tbl_mobil.id INNER JOIN tbl_jenis_bayar ON tbl_pesanan.id_jenis_bayar = tbl_jenis_bayar.id");
+		$query = $this->setQuery("SELECT tbl_pesanan.id, tbl_pemesan.nama AS nama_pemesan, tbl_mobil.nama AS nama_mobil, tbl_jenis_bayar.jenis_bayar,harga,tgl_pinjam,tgl_kembali,DATEDIFF(tgl_kembali,now()) as ddif 
+		FROM tbl_pesanan 
+		INNER JOIN tbl_pemesan ON tbl_pesanan.id_pemesan = tbl_pemesan.id 
+		INNER JOIN tbl_mobil ON tbl_pesanan.id_mobil = tbl_mobil.id 
+		INNER JOIN tbl_jenis_bayar ON tbl_pesanan.id_jenis_bayar = tbl_jenis_bayar.id 
+		where tbl_pemesan.id_perusahaanref=".$_SESSION['login']['id_perusahaanref']."  
+		order by tbl_pesanan.id desc");
+		$query = $this->execute();
+		return $query;
+	}
+
+	public function lihattgl($tglstart,$tglend){
+		$tglstart=date('Y-m-d',strtotime($tglstart));
+		$tglend=date('Y-m-d',strtotime($tglend));
+		$query = $this->setQuery("SELECT tbl_pesanan.id, tbl_pemesan.nama AS nama_pemesan, tbl_mobil.nama AS nama_mobil, tbl_jenis_bayar.jenis_bayar,harga,tgl_pinjam,tgl_kembali,DATEDIFF(tgl_kembali,now()) as ddif 
+		FROM tbl_pesanan 
+		INNER JOIN tbl_pemesan ON tbl_pesanan.id_pemesan = tbl_pemesan.id 
+		INNER JOIN tbl_mobil ON tbl_pesanan.id_mobil = tbl_mobil.id 
+		INNER JOIN tbl_jenis_bayar ON tbl_pesanan.id_jenis_bayar = tbl_jenis_bayar.id 
+		where tbl_pemesan.id_perusahaanref=".$_SESSION['login']['id_perusahaanref']." and tbl_pesanan.tgl_pinjam>='".$tglstart."' and tbl_pesanan.tgl_pinjam<='".$tglend."'
+		order by tbl_pesanan.id desc");
 		$query = $this->execute();
 		return $query;
 	}

@@ -40,52 +40,52 @@
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-md-6">
+					<div class="col-sm-6">
 						<div class="card shadow">
 							<div class="card-header">
-								<h6 class="m-0 font-weight-bold text-primary"><?= $judul ?> - <?= $pesanan->nama_pemesan ?></h6>
+								<h6 class="m-0 font-weight-bold text-primary">Ubah Data</h6>
 							</div>
 							<div class="card-body">
-								<div class="row">
-									<div class="col-sm-4">
-										Nama Pemesan <br>
-										Tanggal Pinjam <br>
-										Tanggal Kembali <br>
-										Mobil <br>
-										Perjalanan <br>
-										Total Harga <br>
-										Jenis Bayar <br>
+							<?php if(checkSession('success')): ?>
+									<div class="alert alert-success alert-dismissible fade show" role="alert">
+							  			<?= getSession('success', true) ?>
+							  			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+							    			<span aria-hidden="true">&times;</span>
+							  			</button>
 									</div>
-									<div class="col-sm-1">
-										: <br>
-										: <br>
-										: <br>
-										: <br>
-										: <br>
-										: <br>
-										: <br>
+								<?php elseif(checkSession('error')): ?>
+									<div class="alert alert-danger alert-dismissible fade show" role="alert">
+							  			<?= getSession('error', true) ?>
+							  			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+							    			<span aria-hidden="true">&times;</span>
+							  			</button>
 									</div>
-									<div class="col-sm-6">
-										<strong><?= $pesanan->nama_pemesan ?></strong><br>
-										<strong><?= $pesanan->tgl_pinjam ?></strong><br>
-										<strong><?= $pesanan->tgl_kembali ?></strong><br>
-										<strong><?= $pesanan->nama_mobil ?></strong><br>
-										<strong><?= $pesanan->asal ?> - <?= $pesanan->tujuan ?></strong><br>
-										<strong>Rp. <?= number_format($pesanan->harga, 0, ',', '.') ?></strong><br>
-										<strong><?= $pesanan->jenis_bayar ?></strong><br>
-									</div>
-								</div>
-								<hr>
-								<div class="row">
-									<div class="col">
-										<a href="<?= base_url('pesanan/ubah/' . $pesanan->id.'/'.$tglstart.'/'.$tglend) ?>" class="btn btn-sm btn-info"><i class="fa fa-pen"></i> Ubah</a>
-         								<a href="<?= base_url('pesanan/hapus/' . $pesanan->id.'/'.$tglstart.'/'.$tglend) ?>" class="btn btn-sm btn-danger" onclick="return confirm('apakah anda yakin?')"><i class="fa fa-trash"></i> Hapus</a>
-										<a href="<?= base_url('pesanan/indextgl/'.$tglstart.'/'.$tglend) ?>" class="btn btn-sm btn-secondary"><i class="fa fa-reply"></i> Kembali</a>
-									</div>
-								</div>
+								<?php endif ?>
+								<form method="POST" action="<?= base_url('gantipassword/ubah') ?>" enctype="multipart/form-data">
+								 
+									  <div class="form-group">
+								  		<label for="password">Password Lama</label>
+								  		<input type="password" name="passwordlama" id="passwordlama" required="required" placeholder="ketik" autocomplete="off" class="form-control">
+								  	</div>
+								  	<div class="form-group">
+								  		<label for="password">Password Baru</label>
+								  		<input type="password" name="password" id="password" required="required" placeholder="ketik" autocomplete="off" class="form-control">
+								  	</div>
+								  	<div class="form-group">
+								  		<label for="password2">Konfirmasi Password Baru</label>
+								  		<input type="password" name="password2" id="password2" required="required" placeholder="ketik" autocomplete="off" class="form-control">
+								  	</div>
+								  
+								  	<div class="form-group">
+										<button type="submit" class="btn btn-sm btn-success" name="tambah"> Ubah</button>
+										<button type="reset" class="btn btn-sm btn-danger"><i class="fa fa-times"></i> Batal</button>
+								  	</div>
+								</form>
 							</div>
 						</div>
 					</div>
+
+			
 				</div>
 			</div>
 		</div>

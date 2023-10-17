@@ -18,6 +18,7 @@ class Controller {
 	}
 
 	public function addFunction($function){
+		//echo $function;
 		if(file_exists(F_PATH . DS . $function . '_function.php')) require_once F_PATH . DS . $function . '_function.php';
 		else die('function tidak ditemukan!');
 	}

@@ -66,7 +66,7 @@
 
 								  	<div class="form-group">
 								  		<label for="foto">Foto Pemesan</label>
-								  		<input type="file" name="foto" id="foto" required="required" placeholder="ketik" autocomplete="off" class="form-control-file">
+								  		<input type="file" name="foto" id="foto"  placeholder="ketik" autocomplete="off" class="form-control-file">
 								  		ukuran foto wajib 200px X 200px
 								  	</div>
 								  	<div class="form-group">

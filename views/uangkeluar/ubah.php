@@ -11,6 +11,7 @@
 	<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 	<link href="<?= base_url('sb-admin-2/') ?>/css/sb-admin-2.min.css" rel="stylesheet">
 	<link href="<?= base_url('sb-admin-2/') ?>/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
 </head>
 
 <body id="page-top">
@@ -40,49 +41,39 @@
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-md-6">
+					<div class="col-sm-4">
 						<div class="card shadow">
 							<div class="card-header">
-								<h6 class="m-0 font-weight-bold text-primary"><?= $judul ?> - <?= $pesanan->nama_pemesan ?></h6>
+								<h6 class="m-0 font-weight-bold text-primary">Tambah Data</h6>
 							</div>
 							<div class="card-body">
-								<div class="row">
-									<div class="col-sm-4">
-										Nama Pemesan <br>
-										Tanggal Pinjam <br>
-										Tanggal Kembali <br>
-										Mobil <br>
-										Perjalanan <br>
-										Total Harga <br>
-										Jenis Bayar <br>
-									</div>
-									<div class="col-sm-1">
-										: <br>
-										: <br>
-										: <br>
-										: <br>
-										: <br>
-										: <br>
-										: <br>
-									</div>
-									<div class="col-sm-6">
-										<strong><?= $pesanan->nama_pemesan ?></strong><br>
-										<strong><?= $pesanan->tgl_pinjam ?></strong><br>
-										<strong><?= $pesanan->tgl_kembali ?></strong><br>
-										<strong><?= $pesanan->nama_mobil ?></strong><br>
-										<strong><?= $pesanan->asal ?> - <?= $pesanan->tujuan ?></strong><br>
-										<strong>Rp. <?= number_format($pesanan->harga, 0, ',', '.') ?></strong><br>
-										<strong><?= $pesanan->jenis_bayar ?></strong><br>
-									</div>
-								</div>
-								<hr>
-								<div class="row">
-									<div class="col">
-										<a href="<?= base_url('pesanan/ubah/' . $pesanan->id.'/'.$tglstart.'/'.$tglend) ?>" class="btn btn-sm btn-info"><i class="fa fa-pen"></i> Ubah</a>
-         								<a href="<?= base_url('pesanan/hapus/' . $pesanan->id.'/'.$tglstart.'/'.$tglend) ?>" class="btn btn-sm btn-danger" onclick="return confirm('apakah anda yakin?')"><i class="fa fa-trash"></i> Hapus</a>
-										<a href="<?= base_url('pesanan/indextgl/'.$tglstart.'/'.$tglend) ?>" class="btn btn-sm btn-secondary"><i class="fa fa-reply"></i> Kembali</a>
-									</div>
-								</div>
+								<form method="POST" action="<?= base_url('uangkeluar/proses_ubah/'.$duk->id.'/'.$tglstart.'/'.$tglend) ?>">
+								  	<div class="form-group">
+										<label for="asal">Jenis Uang Keluar</label>
+										<select name="typeuk" id="typeuk" class="form-control" required="required">
+                                            <option value="">-PILIH-</option>
+								  			<?php while($pemesan = $data_ttuk->fetch_object()) : ?>
+												<option value="<?= $pemesan->idtuk ?>" <?php if($pemesan->idtuk==$duk->typeuk){ echo "selected";} ?> ><?= $pemesan->nametuk ?></option>
+								  			<?php endwhile; ?>
+								  		</select>
+								  	</div>
+								  	<div class="form-group">
+										<label for="tujuan">Deskripsi</label>
+										<input type="text" class="form-control" value="<?=$duk->ketuk?>" name="ketuk" id="ketuk" autocomplete="off" required="required" placeholder="ketik">
+								  	</div>
+								  	<div class="form-group">
+										<label for="jarak">Nominal Pengeluaran</label>
+										<input type="text" class="form-control" value="<?=number_format($duk->rpuk,0,',','.')?>" name="rpuk" id="rpuk" maxlength="15" onkeyup="FormatCurrency(this)" style="text-align: right;"  autocomplete="off" required="required" placeholder="0">
+								  	</div>
+                                      <div class="form-group">
+										<label for="tujuan">Tanggal Uang Keluar</label>
+										<input type="text" data-provide="datepicker" data-date-format="dd-mm-yyyy" data-date-autoclose="true" value="<?= date('d-m-Y',strtotime($duk->tgluk))?>" name="tgluk" id="tgluk" required="required" autocomplete="off" class="form-control">
+								  	</div>
+								  	<div class="form-group">
+										<button type="submit" class="btn btn-sm btn-success" name="ubah"><i class="fa fa-plus"></i> Ubah</button>
+										<button type="reset" class="btn btn-sm btn-danger"><i class="fa fa-times"></i> Batal</button>
+								  	</div>
+								</form>
 							</div>
 						</div>
 					</div>
@@ -106,6 +97,7 @@
 	<script src="<?= base_url('sb-admin-2/') ?>/vendor/datatables/jquery.dataTables.min.js"></script>
   	<script src="<?= base_url('sb-admin-2/') ?>/vendor/datatables/dataTables.bootstrap4.min.js"></script>
 	<script src="<?= base_url('sb-admin-2/') ?>/js/demo/datatables-demo.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
 </body>
 
 </html>

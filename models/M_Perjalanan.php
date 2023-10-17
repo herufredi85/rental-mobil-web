@@ -8,7 +8,7 @@ class M_Perjalanan extends Model{
 	}
 
 	public function lihat(){
-		$query = $this->get('tbl_perjalanan');
+		$query = $this->get_where('tbl_perjalanan',['id_perusahaanref'=>$_SESSION['login']['id_perusahaanref']]);
 		$query = $this->execute();
 		return $query;
 	}

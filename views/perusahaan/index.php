@@ -43,28 +43,32 @@
 					<div class="col-sm-4">
 						<div class="card shadow">
 							<div class="card-header">
-								<h6 class="m-0 font-weight-bold text-primary">Tambah Data</h6>
+								<h6 class="m-0 font-weight-bold text-primary">Ubah Data</h6>
 							</div>
 							<div class="card-body">
-								<form method="POST" action="<?= base_url('akun/tambah') ?>" enctype="multipart/form-data">
+                            <?php while($akun = $data_akun->fetch_object()) :
+                                $logo=$akun->logo;
+                                $nama_perusahaan=$akun->nama_perusahaan;
+                                 ?>
+								<form method="POST" action="<?= base_url('perusahaan/tambah') ?>" enctype="multipart/form-data">
 								  	<div class="form-group">
-								  		<label for="nama">Nama</label>
-								  		<input type="text" name="nama" id="nama" required="required" placeholder="ketik" autocomplete="off" class="form-control">
+								  		<label id="lblnama" for="nama">Nama Perusahaan</label>
+								  		<input type="text" value="<?=$akun->nama_perusahaan?>" name="nama_perusahaan" id="nama_perusahaan" required="required" placeholder="ketik" autocomplete="off" class="form-control">
 								  	</div>
 								  	<div class="form-group">
-								  		<label for="username">Username</label>
-								  		<input type="text" name="username" id="username" required="required" placeholder="ketik" autocomplete="off" class="form-control">
+								  		<label for="username">Alamat</label>
+								  		<input type="text" value="<?=$akun->alamat?>" name="alamat" id="alamat" required="required" placeholder="ketik" autocomplete="off" class="form-control">
 								  	</div>
 								  	<div class="form-group">
-								  		<label for="password">Password</label>
-								  		<input type="password" name="password" id="password" required="required" placeholder="ketik" autocomplete="off" class="form-control">
+								  		<label for="password">Telp</label>
+								  		<input type="text" value="<?=$akun->telp?>" name="telp" id="telp" required="required" placeholder="ketik" autocomplete="off" class="form-control">
 								  	</div>
 								  	<div class="form-group">
-								  		<label for="password2">Konfirmasi Password</label>
-								  		<input type="password" name="password2" id="password2" required="required" placeholder="ketik" autocomplete="off" class="form-control">
+								  		<label for="password2">Email</label>
+								  		<input type="text" value="<?=$akun->email?>" name="email" id="email" required="required" placeholder="ketik" autocomplete="off" class="form-control">
 								  	</div>
 								  	<div class="form-group">
-								  		<label for="foto">Foto</label>
+								  		<label for="foto">Logo</label>
 								  		<input type="file" name="foto" id="foto"  placeholder="ketik" autocomplete="off" class="form-control-file">
 								  		ukuran foto wajib 200px X 200px
 								  	</div>
@@ -73,6 +77,7 @@
 										<button type="reset" class="btn btn-sm btn-danger"><i class="fa fa-times"></i> Batal</button>
 								  	</div>
 								</form>
+                                <?php endwhile; ?>
 							</div>
 						</div>
 					</div>
@@ -80,7 +85,7 @@
 					<div class="col-sm-8">
 						<div class="card shadow">
 							<div class="card-header">
-								<h6 class="m-0 font-weight-bold text-primary">Daftar Akun</h6>
+								<h6 class="m-0 font-weight-bold text-primary">Logo</h6>
 							</div>
 							<div class="card-body">
 								<?php if(checkSession('success')): ?>
@@ -98,38 +103,7 @@
 							  			</button>
 									</div>
 								<?php endif ?>
-
-								<table class="table table-bordered" id="dataTable" width="" cellspacing="0">
-	                  				<thead>
-	                    				<tr>
-	                    					<th>No</th>
-	                    					<th>Nama</th>
-	                    					<th>Username</th>
-	                    					<th>Aksi</th>
-	                    				</tr>
-	                 				</thead>
-	                  				<tfoot>
-	                    				<tr>
-	                    					<th>No</th>
-	                    					<th>Nama</th>
-	                    					<th>Username</th>
-	                    					<th>Aksi</th>
-	                    				</tr>
-	                  				</tfoot>
-	                 				<tbody>
-										<?php while($akun = $data_akun->fetch_object()) : ?>
-											<tr>
-												<td><?= $no++ ?></td>
-												<td><?= $akun->nama ?></td>
-												<td><?= $akun->username ?></td>
-												<td>
-													<a href="<?= base_url('akun/detail/' . $akun->id) ?>" class="btn btn-sm btn-warning"><i class="fa fa-eye"></i> Detail</a>
-													<a href="<?= base_url('akun/hapus/' . $akun->id) ?>" class="btn btn-sm btn-danger" onclick="return confirm('apakah anda yakin?')"><i class="fa fa-trash"></i> Hapus</a>
-												</td>
-											</tr>
-										<?php endwhile; ?>
-									</tbody>
-              					</table>
+                                <img src="<?= base_url('uploads/perusahaan/' . $logo) ?>" alt="<?= $nama_perusahaan ?>" class="img-thumbnail mb-4">
 							</div>
 						</div>
 					</div>

@@ -60,17 +60,29 @@ class C_Pemesan extends Controller{
 					'alamat' => $this->req->post('alamat'),
 					'jenis_kelamin' => $this->req->post('jenis_kelamin'),
 					'foto' => $img_name . '.' . $ekstensi,
+					'id_perusahaanref'=>$_SESSION['login']['id_perusahaanref']
 				];
 
-				if($this->pemesan->tambah($data)){
-					setSession('success', 'Data berhasil ditambahkan!');
-					redirect('pemesan');
-				} else {
-					setSession('error', 'Data gagal ditambahkan!');
-					redirect('pemesan');
-				}
+			
 			} else die('gagal upload gambar');
-		} else die('gambar error');
+		} else {
+
+			$data = [
+				'nama' => $this->req->post('nama'),
+				'alamat' => $this->req->post('alamat'),
+				'jenis_kelamin' => $this->req->post('jenis_kelamin'),
+				'id_perusahaanref'=>$_SESSION['login']['id_perusahaanref']
+			];
+
+		}// die('gambar error');
+
+		if($this->pemesan->tambah($data)){
+			setSession('success', 'Data berhasil ditambahkan!');
+			redirect('pemesan');
+		} else {
+			setSession('error', 'Data gagal ditambahkan!');
+			redirect('pemesan');
+		}
 	}
 
 	public function hapus($id = null){
@@ -78,7 +90,10 @@ class C_Pemesan extends Controller{
 
 		$gambar	= $this->pemesan->detail($id)->fetch_object()->foto;
 
-		unlink(BASEPATH . DS . 'uploads' . DS . $gambar) or die('gagal hapus gambar!');
+		if($gambar!=""){
+			unlink(BASEPATH . DS . 'uploads' . DS . $gambar) or die('gagal hapus gambar!');
+		}
+		
 		if($this->pemesan->hapus($id)){
 			setSession('success', 'Data berhasil dihapus!');
 			redirect('pemesan');
@@ -125,14 +140,21 @@ class C_Pemesan extends Controller{
 					'foto' => $img_name . '.' . $ekstensi,
 				];
 
-				if($this->pemesan->ubah($data, $id)){
-					setSession('success', 'Data berhasil diubah!');
-					redirect('pemesan');
-				} else {
-					setSession('error', 'Data gagal diubah!');
-					redirect('pemesan');
-				}
+			
 			} else die('gagal upload gambar');
-		} else die('gambar error');
+		} else{
+			$data = [
+				'nama' => $this->req->post('nama'),
+				'alamat' => $this->req->post('alamat'),
+				'jenis_kelamin' => $this->req->post('jenis_kelamin'),
+			];
+		} //die('gambar error');
+		if($this->pemesan->ubah($data, $id)){
+			setSession('success', 'Data berhasil diubah!');
+			redirect('pemesan');
+		} else {
+			setSession('error', 'Data gagal diubah!');
+			redirect('pemesan');
+		}
 	}
 }
