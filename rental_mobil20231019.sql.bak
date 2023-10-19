@@ -179,7 +179,7 @@ INSERT INTO `tbl_pesanan` VALUES (11, 250000, '2023-10-16', '2023-10-17', 7, 14,
 -- ----------------------------
 DROP TABLE IF EXISTS `tbl_pesanan2`;
 CREATE TABLE `tbl_pesanan2`  (
-  `id` int NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL DEFAULT 0 AUTO_INCREMENT,
   `harga` int NULL DEFAULT NULL,
   `tgl_pinjam` date NULL DEFAULT NULL,
   `tgl_kembali` date NULL DEFAULT NULL,

@@ -96,9 +96,9 @@
       </thead>
       <tbody >
         <tr>
-          <td ><?=$pesanan->nama_pemesan?></td>
+          <td ><?=$pesanan->id_pemesan?></td>
           <td><?=$pesanan->jenis_bayar?></td>
-          <td><?=$pesanan->nama_mobil?></td>
+          <td><?=$pesanan->id_mobil?></td>
           <td><?=date('d-m-Y',strtotime($pesanan->tgl_pinjam))?></td>
           <td><?=date('d-m-Y',strtotime($pesanan->tgl_kembali))?></td>
           <td><?=number_format($pesanan->harga,0,',','.')?></td>

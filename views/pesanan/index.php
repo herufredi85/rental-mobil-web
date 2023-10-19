@@ -161,8 +161,8 @@
 							  			</button>
 									</div>
 								<?php endif ?>
-
-								<table class="table table-bordered" id="dataTable" width="" cellspacing="0">
+								<div class="table-responsive">
+								<table class="table table-bordered " id="dataTable" width="" cellspacing="0">
 	                  				<thead>
 	                    				<tr>
 	                    					<th>No</th>
@@ -219,6 +219,7 @@
 										<?php endwhile; ?>
 									</tbody>
               					</table>
+								</div>
 								  <div>
 									<hr>
 									<div style="text-align: right;"><h3>Total : Rp <?=number_format($tot,0,',','.')?> </h3></div>

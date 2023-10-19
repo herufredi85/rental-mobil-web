@@ -91,9 +91,9 @@
 										</div>
 									<?php endif ?>
 
-									<table class="table table-bordered" cellspacing="0">
-										<thead>
-											<tr>
+									<table class="table table-bordered"  cellspacing="0">
+										<thead
+											<tr
 												<th align="center">No</th>
 												<th align="center">Tanggal</th>
 												<th align="center">Uang Masuk</th>
