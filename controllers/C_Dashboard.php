@@ -20,10 +20,10 @@ class C_Dashboard extends Controller {
 		$data = [
 			'aktif' => 'dashboard',
 			'judul' => 'Dashboard',
-			'mobil' => $this->mobil->lihat(),
-			'pemesan' => $this->pemesan->lihat(),
+			//'mobil' => $this->mobil->lihat(),
+			//'pemesan' => $this->pemesan->lihat(),
 			'pesanan' => $this->pesanan->lihat(),
-			'akun' => $this->akun->lihat(),
+			//'akun' => $this->akun->lihat(),
 		];
 		$this->view('dashboard', $data);
 	}

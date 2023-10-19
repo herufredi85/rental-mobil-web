@@ -50,23 +50,23 @@
 								<form method="POST" action="<?= base_url('pesanan/proses_ubah/' . $pesanan->id.'/'.$tglstart.'/'.$tglend) ?>" enctype="multipart/form-data">
 								  	<div class="form-group">
 								  		<label for="id_pemesan">Nama Pemesan</label>
-								  		<input type="text" disabled="disabled" class="form-control" value="<?= $pemesan->nama ?>">
+								  		<input type="text" disabled="disabled" class="form-control" value="<?= $pesanan->id_pemesan ?>">
 								  	</div>
 
 								  	<div class="form-group">
 								  		<label for="id_mobil">Mobil</label>
-								  		<input type="text" disabled="disabled" class="form-control" value="<?= $mobil->nama ?>">
+								  		<input type="text" disabled="disabled" class="form-control" value="<?= $pesanan->id_mobil ?>">
 								  	</div>
 
-									<div class="form-group">
+									<!-- <div class="form-group">
 								  		<label for="id_perjalanan">Perjalanan</label>
 								  		<input type="text" disabled="disabled" class="form-control" value="<?= $perjalanan->asal . ' - ' . $perjalanan->tujuan ?>">
-								  	</div>
+								  	</div> -->
 
 								  	<div class="row">
 								  		<div class="col-md-6">
 								  			<div class="form-group">
-										  		<label for="id_jenis_bayar">Jenis Bayar</label>
+										  		<label for="id_jenis_bayar">Jenis Layanan</label>
 										  		<input type="text" disabled="disabled" class="form-control" value="<?= $jenis_bayar->jenis_bayar ?>">
 										  	</div>
 								  		</div>

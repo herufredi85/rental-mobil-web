@@ -43,7 +43,7 @@
 					<div class="col-md-6">
 						<div class="card shadow">
 							<div class="card-header">
-								<h6 class="m-0 font-weight-bold text-primary"><?= $judul ?> - <?= $pesanan->nama_pemesan ?></h6>
+								<h6 class="m-0 font-weight-bold text-primary"><?= $judul ?> - <?= $pesanan->id_pemesan ?></h6>
 							</div>
 							<div class="card-body">
 								<div class="row">
@@ -52,9 +52,9 @@
 										Tanggal Pinjam <br>
 										Tanggal Kembali <br>
 										Mobil <br>
-										Perjalanan <br>
+										<!-- Perjalanan <br> -->
 										Total Harga <br>
-										Jenis Bayar <br>
+										Jenis Layanan <br>
 									</div>
 									<div class="col-sm-1">
 										: <br>
@@ -66,11 +66,11 @@
 										: <br>
 									</div>
 									<div class="col-sm-6">
-										<strong><?= $pesanan->nama_pemesan ?></strong><br>
-										<strong><?= $pesanan->tgl_pinjam ?></strong><br>
-										<strong><?= $pesanan->tgl_kembali ?></strong><br>
-										<strong><?= $pesanan->nama_mobil ?></strong><br>
-										<strong><?= $pesanan->asal ?> - <?= $pesanan->tujuan ?></strong><br>
+										<strong><?= $pesanan->id_pemesan ?></strong><br>
+										<strong><?= date('d-m-Y',strtotime($pesanan->tgl_pinjam))?></strong><br>
+										<strong><?= date('d-m-Y',strtotime($pesanan->tgl_kembali))?></strong><br>
+										<strong><?= $pesanan->id_mobil ?></strong><br>
+										<!-- <strong><?= $pesanan->asal ?> - <?= $pesanan->tujuan ?></strong><br> -->
 										<strong>Rp. <?= number_format($pesanan->harga, 0, ',', '.') ?></strong><br>
 										<strong><?= $pesanan->jenis_bayar ?></strong><br>
 									</div>

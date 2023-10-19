@@ -96,6 +96,7 @@ class C_Pesanan extends Controller {
 	public function ubah($id,$tglstart,$tglend){
 		if(!isset($id) || $this->pesanan->cek($id)->num_rows == 0) redirect('pesanan/indextgl/'.$tglstart."/".$tglend);
 		$pesanan = $this->pesanan->lihat_id($id)->fetch_object();
+		//print_r($pesanan);
 		$id_pemesan = $pesanan->id_pemesan;
 		$id_mobil = $pesanan->id_mobil;
 		$id_perjalanan = $pesanan->id_perjalanan;
@@ -106,9 +107,9 @@ class C_Pesanan extends Controller {
 			'tglend' => $tglend,
 			'aktif' => 'pesanan',
 			'judul' => 'Ubah Pesanan',
-			'pemesan' => $this->pemesan->lihat_id($id_pemesan)->fetch_object(),
-			'mobil' => $this->mobil->lihat_id($id_mobil)->fetch_object(),
-			'perjalanan' => $this->perjalanan->lihat_id($id_perjalanan)->fetch_object(),
+			//'pemesan' => $this->pemesan->lihat_id($id_pemesan)->fetch_object(),
+			//'mobil' => $this->mobil->lihat_id($id_mobil)->fetch_object(),
+			//'perjalanan' => $this->perjalanan->lihat_id($id_perjalanan)->fetch_object(),
 			'jenis_bayar' => $this->j_bayar->lihat_id($id_jenis_bayar)->fetch_object(),
 			'pesanan' => $pesanan
 		];

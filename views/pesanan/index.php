@@ -54,25 +54,27 @@
 								<form method="POST" action="<?= base_url('pesanan/tambah/'.$tglstart.'/'.$tglend) ?>" enctype="multipart/form-data">
 								  	<div class="form-group">
 								  		<label for="id_pemesan">Nama Pemesan</label>
-								  		<select name="id_pemesan" id="id_pemesan" class="form-control">
+										<input type="text"  name="id_pemesan" id="id_pemesan" class="form-control">
+								  		<!-- <select name="id_pemesan" id="id_pemesan" class="form-control">
 										  <option value="">-PILIH-</option>
 								  			<?php while($pemesan = $data_pemesan->fetch_object()) : ?>
 												<option value="<?= $pemesan->id ?>"><?= $pemesan->nama ?></option>
 								  			<?php endwhile; ?>
-								  		</select>
+								  		</select> -->
 								  	</div>
 
 								  	<div class="form-group">
 								  		<label for="id_mobil">Mobil</label>
-								  		<select name="id_mobil" id="id_mobil" class="form-control">
+										  <input type="text"  name="id_mobil" id="id_mobil" class="form-control">
+								  		<!-- <select name="id_mobil" id="id_mobil" class="form-control">
 										  <option value="">-PILIH-</option>
 								  			<?php while($mobil = $data_mobil->fetch_object()) : ?>
 												<option value="<?= $mobil->id ?>"><?= $mobil->nama ?></option>
 								  			<?php endwhile; ?>
-								  		</select>
+								  		</select> -->
 								  	</div>
 
-									<div class="form-group">
+									<!-- <div class="form-group">
 								  		<label for="id_perjalanan">Perjalanan</label>
 								  		<select name="id_perjalanan" id="id_perjalanan" class="form-control">
 										  <option value="">-PILIH-</option>
@@ -80,12 +82,13 @@
 												<option value="<?= $perjalanan->id ?>"><?= $perjalanan->asal ?> - <?= $perjalanan->tujuan ?> (<?= $perjalanan->jarak ?> KM)</option>
 								  			<?php endwhile; ?>
 								  		</select>
-								  	</div>
+								  	</div> -->
 
 								  	<div class="row">
+										<input type="hidden" name="id_perjalanan" id="id_perjalanan" value='7'>
 								  		<div class="col-md-6">
 								  			<div class="form-group">
-										  		<label for="id_jenis_bayar">Jenis Bayar</label>
+										  		<label for="id_jenis_bayar">Jenis Layanan</label>
 										  		<select name="id_jenis_bayar" id="id_jenis_bayar" class="form-control">
 												  <option value="">-PILIH-</option>
 										  			<?php while($jenis_bayar = $data_jenis_bayar->fetch_object()) : ?>
@@ -185,6 +188,7 @@
 	                 				<tbody>
 										<?php 
 										$tot=0;
+										//print_r($data_pesanan);
 										while($pesanan = $data_pesanan->fetch_object()) :
 											$tot=$tot+$pesanan->harga;
 										?>

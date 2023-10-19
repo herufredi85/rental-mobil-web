@@ -15,9 +15,9 @@
         </a>
     </li>
 
-    <hr class="sidebar-divider">
+    <!--<hr class="sidebar-divider">
 
-    <div class="sidebar-heading">
+     <div class="sidebar-heading">
         Master Mobil
     </div>
     
@@ -32,31 +32,31 @@
             <i class="fas fa-fw fa-car-alt"></i>
             <span>Data Mobil</span>
         </a>
-    </li>
+    </li> -->
     
-    <hr class="sidebar-divider">
-    <div class="sidebar-heading">
+    <!--<hr class="sidebar-divider">
+     <div class="sidebar-heading">
         Master Pemesan
-    </div>
+    </div> -->
 
-    <li class="nav-item <?= $data == 'pemesan' ? 'active' : '' ?>">
+    <!-- <li class="nav-item <?= $data == 'pemesan' ? 'active' : '' ?>">
         <a class="nav-link" href="<?= base_url('pemesan') ?>">
             <i class="fas fa-fw fa-user"></i>
             <span>Data Pemesan</span>
         </a>
-    </li>
+    </li> -->
     <!-- <li class="nav-item <?= $data == 'jenis_bayar' ? 'active' : '' ?>">
         <a class="nav-link" href="<?= base_url('jenis_bayar') ?>">
             <i class="fas fa-fw fa-dollar-sign"></i>
             <span>Data Jenis Bayar</span>
         </a>
     </li> -->
-    <li class="nav-item <?= $data == 'perjalanan' ? 'active' : '' ?>">
+    <!-- <li class="nav-item <?= $data == 'perjalanan' ? 'active' : '' ?>">
         <a class="nav-link" href="<?= base_url('perjalanan') ?>">
             <i class="fas fa-fw fa-street-view"></i>
             <span>Data Perjalanan</span>
         </a>
-    </li>
+    </li> -->
     <hr class="sidebar-divider">
     <div class="sidebar-heading">
         Transaksi
