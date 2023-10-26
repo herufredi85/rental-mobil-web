@@ -48,6 +48,10 @@
 							</div>
 							<div class="card-body">
 								<form method="POST" action="<?= base_url('pesanan/proses_ubah/' . $pesanan->id.'/'.$tglstart.'/'.$tglend) ?>" enctype="multipart/form-data">
+								<div class="form-group">
+								  		<label for="id_pemesan">Kode Booking</label>
+								  		<input type="text" disabled="disabled" class="form-control" value="<?= $pesanan->booking_code ?>">
+								  	</div>
 								  	<div class="form-group">
 								  		<label for="id_pemesan">Nama Pemesan</label>
 								  		<input type="text" disabled="disabled" class="form-control" value="<?= $pesanan->id_pemesan ?>">
@@ -91,6 +95,20 @@
 										  		<input type="text" data-provide="datepicker" data-date-format="dd-mm-yyyy" data-date-autoclose="true"  name="tgl_kembali" value="<?=date('d-m-Y',strtotime($pesanan->tgl_kembali))?>" id="tgl_kembali" required="required" autocomplete="off" class="form-control">
 										  	</div>
 									  	</div>
+									</div>
+									
+									<div class="row">
+									<div class="col-md-6">
+									<div class="form-group">
+									<label for="tgl_kembali">Status</label>
+									<select name="id_perjalanan" id="id_perjalanan" class="form-control">
+										  
+								  			<?php while($perjalanan = $data_perjalanan->fetch_object()) : ?>
+												<option value="<?= $perjalanan->id ?>" <?php if($perjalanan->id==$id_perjalanan){ echo "selected";} ?> ><?= $perjalanan->asal ?></option>
+								  			<?php endwhile; ?>
+								  		</select>
+								  	</div>
+										</div>
 									</div>
 								  	<div class="form-group">
 										<button type="submit" class="btn btn-sm btn-success" name="ubah"><i class="fa fa-pen"></i> Ubah</button>

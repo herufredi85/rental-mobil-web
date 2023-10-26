@@ -48,11 +48,12 @@
 							<div class="card-body">
 								<div class="row">
 									<div class="col-sm-4">
+										Kode Booking <br>
 										Nama Pemesan <br>
 										Tanggal Pinjam <br>
 										Tanggal Kembali <br>
 										Mobil <br>
-										<!-- Perjalanan <br> -->
+										Status <br>
 										Total Harga <br>
 										Jenis Layanan <br>
 									</div>
@@ -64,13 +65,15 @@
 										: <br>
 										: <br>
 										: <br>
+										: <br>
 									</div>
 									<div class="col-sm-6">
+									    <strong><?= $pesanan->booking_code ?></strong><br>
 										<strong><?= $pesanan->id_pemesan ?></strong><br>
 										<strong><?= date('d-m-Y',strtotime($pesanan->tgl_pinjam))?></strong><br>
 										<strong><?= date('d-m-Y',strtotime($pesanan->tgl_kembali))?></strong><br>
 										<strong><?= $pesanan->id_mobil ?></strong><br>
-										<!-- <strong><?= $pesanan->asal ?> - <?= $pesanan->tujuan ?></strong><br> -->
+										<strong><?= $pesanan->asal ?></strong><br>
 										<strong>Rp. <?= number_format($pesanan->harga, 0, ',', '.') ?></strong><br>
 										<strong><?= $pesanan->jenis_bayar ?></strong><br>
 									</div>

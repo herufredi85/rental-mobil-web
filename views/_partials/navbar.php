@@ -34,17 +34,17 @@
         </a>
     </li> -->
     
-    <!--<hr class="sidebar-divider">
+    <hr class="sidebar-divider">
      <div class="sidebar-heading">
         Master Pemesan
-    </div> -->
+    </div>
 
-    <!-- <li class="nav-item <?= $data == 'pemesan' ? 'active' : '' ?>">
+    <li class="nav-item <?= $data == 'pemesan' ? 'active' : '' ?>">
         <a class="nav-link" href="<?= base_url('pemesan') ?>">
             <i class="fas fa-fw fa-user"></i>
             <span>Data Pemesan</span>
         </a>
-    </li> -->
+    </li>
     <!-- <li class="nav-item <?= $data == 'jenis_bayar' ? 'active' : '' ?>">
         <a class="nav-link" href="<?= base_url('jenis_bayar') ?>">
             <i class="fas fa-fw fa-dollar-sign"></i>

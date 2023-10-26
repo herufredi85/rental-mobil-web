@@ -86,21 +86,25 @@
        
       <thead>
         <tr>
+        <th>Kode Booking</th>
           <th>Nama Pemesan</th>
           <th>Jenis Pembayaran</th>
           <th>Jenis Mobil</th>
           <th>Tanggal Pinjam</th>
           <th>Tanggal Kembali</th>
+          <th>Status</th>
           <th>Nominal</th>
         </tr>
       </thead>
       <tbody >
         <tr>
+        <td ><?=$pesanan->booking_code?></td>
           <td ><?=$pesanan->id_pemesan?></td>
           <td><?=$pesanan->jenis_bayar?></td>
           <td><?=$pesanan->id_mobil?></td>
           <td><?=date('d-m-Y',strtotime($pesanan->tgl_pinjam))?></td>
           <td><?=date('d-m-Y',strtotime($pesanan->tgl_kembali))?></td>
+          <td ><?=$pesanan->asal?></td>
           <td><?=number_format($pesanan->harga,0,',','.')?></td>
         </tr>
  

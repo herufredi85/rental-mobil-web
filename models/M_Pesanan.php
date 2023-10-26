@@ -19,9 +19,10 @@ class M_Pesanan extends Model{
 	public function lihattgl($tglstart,$tglend){
 		$tglstart=date('Y-m-d',strtotime($tglstart));
 		$tglend=date('Y-m-d',strtotime($tglend));
-		$sq="SELECT tbl_pesanan2.id, tbl_pesanan2.id_pemesan AS nama_pemesan, tbl_pesanan2.id_mobil AS nama_mobil, tbl_jenis_bayar.jenis_bayar,harga,tgl_pinjam,tgl_kembali,DATEDIFF(tgl_kembali,now()) as ddif  
+		$sq="SELECT booking_code,tbl_perjalanan.asal as sts,tbl_pesanan2.id, tbl_pesanan2.id_pemesan AS nama_pemesan, tbl_pesanan2.id_mobil AS nama_mobil, tbl_jenis_bayar.jenis_bayar,harga,tgl_pinjam,tgl_kembali,DATEDIFF(tgl_kembali,now()) as ddif  
 		FROM tbl_pesanan2 
-		INNER JOIN tbl_jenis_bayar ON tbl_pesanan2.id_jenis_bayar = tbl_jenis_bayar.id 
+		INNER JOIN tbl_jenis_bayar ON tbl_pesanan2.id_jenis_bayar = tbl_jenis_bayar.id
+		left JOIN tbl_perjalanan ON tbl_pesanan2.id_perjalanan = tbl_perjalanan.id  
 		where tbl_pesanan2.id_perusahaanref=".$_SESSION['login']['id_perusahaanref']." and tbl_pesanan2.tgl_pinjam>='".$tglstart."' and tbl_pesanan2.tgl_pinjam<='".$tglend."'
 		order by tbl_pesanan2.id desc";
 		//echo $sq;
@@ -29,7 +30,33 @@ class M_Pesanan extends Model{
 		$query = $this->execute();
 		return $query;
 	}
-
+	public function generate_cb(){
+		$datenow = date("Y-m-d");
+		$sq="SELECT COUNT(*) as kon  FROM tbl_pesanan2 WHERE tgl_pinjam = '$datenow'";
+		//echo $sq;
+		$query = $this->setQuery($sq);
+		$query = $this->execute();
+		$kon=0;
+		while($data = $query->fetch_object()) :
+			$kon=$data->kon;
+		endwhile;
+		$len=strlen($kon);
+		$code = 'BOK';
+		$ymd = date('ymd');
+		$squence = $kon+1;
+		//$squence = str_pad($squence,$len+1,0,STR_PAD_LEFT);
+		//return
+		return $code.$ymd.''.$squence.$this->generateRandomString(3);
+	}
+	function generateRandomString($length = 10) {
+		$characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+		$charactersLength = strlen($characters);
+		$randomString = '';
+		for ($i = 0; $i < $length; $i++) {
+			$randomString .= $characters[random_int(0, $charactersLength - 1)];
+		}
+		return $randomString;
+	}
 	public function lihat_id($id){
 		$query = $this->get_where('tbl_pesanan2', ['id' => $id]);
 		$query = $this->execute();
@@ -55,9 +82,11 @@ class M_Pesanan extends Model{
 	}
 
 	public function detail($id){
-		$q="SELECT tbl_pesanan2.*, tbl_jenis_bayar.jenis_bayar 
+		$q="SELECT tbl_pesanan2.*, tbl_jenis_bayar.jenis_bayar,tbl_perjalanan.asal 
 		FROM tbl_pesanan2 
-		INNER JOIN tbl_jenis_bayar ON tbl_pesanan2.id_jenis_bayar = tbl_jenis_bayar.id  WHERE tbl_pesanan2.id = $id";
+		INNER JOIN tbl_jenis_bayar ON tbl_pesanan2.id_jenis_bayar = tbl_jenis_bayar.id 
+		left JOIN tbl_perjalanan ON tbl_pesanan2.id_perjalanan = tbl_perjalanan.id  
+		WHERE tbl_pesanan2.id = $id";
 		//echo $q;
 		$query = $this->setQuery($q);
 		$query = $this->execute();

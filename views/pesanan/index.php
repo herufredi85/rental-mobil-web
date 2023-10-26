@@ -52,15 +52,20 @@
 							</div>
 							<div class="card-body">
 								<form method="POST" action="<?= base_url('pesanan/tambah/'.$tglstart.'/'.$tglend) ?>" enctype="multipart/form-data">
+								<div class="form-group">
+								  		<label for="id_pemesan">Kode Booking</label>
+										<input type="text"  name="kode_booking" id="kode_booking" class="form-control" value="<?=$cb?>">
+								  
+								  	</div>
 								  	<div class="form-group">
 								  		<label for="id_pemesan">Nama Pemesan</label>
-										<input type="text"  name="id_pemesan" id="id_pemesan" class="form-control">
-								  		<!-- <select name="id_pemesan" id="id_pemesan" class="form-control">
+										<!-- <input type="text"  name="id_pemesan" id="id_pemesan" class="form-control"> -->
+								  		<select name="id_pemesan" id="id_pemesan" class="form-control">
 										  <option value="">-PILIH-</option>
 								  			<?php while($pemesan = $data_pemesan->fetch_object()) : ?>
-												<option value="<?= $pemesan->id ?>"><?= $pemesan->nama ?></option>
+												<option value="<?= $pemesan->id ?>|<?= $pemesan->nama ?>"><?= $pemesan->nama ?></option>
 								  			<?php endwhile; ?>
-								  		</select> -->
+								  		</select>
 								  	</div>
 
 								  	<div class="form-group">
@@ -74,18 +79,10 @@
 								  		</select> -->
 								  	</div>
 
-									<!-- <div class="form-group">
-								  		<label for="id_perjalanan">Perjalanan</label>
-								  		<select name="id_perjalanan" id="id_perjalanan" class="form-control">
-										  <option value="">-PILIH-</option>
-								  			<?php while($perjalanan = $data_perjalanan->fetch_object()) : ?>
-												<option value="<?= $perjalanan->id ?>"><?= $perjalanan->asal ?> - <?= $perjalanan->tujuan ?> (<?= $perjalanan->jarak ?> KM)</option>
-								  			<?php endwhile; ?>
-								  		</select>
-								  	</div> -->
+									
 
 								  	<div class="row">
-										<input type="hidden" name="id_perjalanan" id="id_perjalanan" value='7'>
+										<!-- <input type="hidden" name="id_perjalanan" id="id_perjalanan" value='7'> -->
 								  		<div class="col-md-6">
 								  			<div class="form-group">
 										  		<label for="id_jenis_bayar">Jenis Layanan</label>
@@ -119,6 +116,15 @@
 										  	</div>
 									  	</div>
 									</div>
+									<div class="form-group">
+								  		<label for="id_perjalanan">Status</label>
+								  		<select name="id_perjalanan" id="id_perjalanan" class="form-control">
+										  <option value="">-PILIH-</option>
+								  			<?php while($perjalanan = $data_perjalanan->fetch_object()) : ?>
+												<option value="<?= $perjalanan->id ?>"><?= $perjalanan->asal ?></option>
+								  			<?php endwhile; ?>
+								  		</select>
+								  	</div>
 								  	<div class="form-group">
 										<button type="submit" class="btn btn-sm btn-success" name="tambah"><i class="fa fa-plus"></i> Tambah</button>
 										<button type="reset" class="btn btn-sm btn-danger"><i class="fa fa-times"></i> Batal</button>
@@ -162,26 +168,30 @@
 									</div>
 								<?php endif ?>
 								<div class="table-responsive">
-								<table class="table table-bordered " id="dataTable" width="" cellspacing="0">
+								<table class="table table-bordered" id="dataTable" width="" cellspacing="0" style="font-size: 12px;">
 	                  				<thead>
 	                    				<tr>
 	                    					<th>No</th>
+											<th>Kode Booking</th>
 	                    					<th>Pemesan</th>
 	                    					<th>Mobil</th>
-	                    					<th>Jenis Bayar</th>
+	                    					<th>Jenis Layanan</th>
 											<th>Tgl Pinjam<br>Tgl Kembali</th>
 											<th>Harga</th>
+											<th>Status</th>
 	                    					<th>Aksi</th>
 	                    				</tr>
 	                 				</thead>
 	                  				<tfoot>
 	                    				<tr>
 	                    					<th>No</th>
+											<th>Kode Booking</th>
 	                    					<th>Pemesan</th>
 	                    					<th>Mobil</th>
-	                    					<th>Jenis Bayar</th>
+	                    					<th>Jenis Layanan</th>
 											<th>Tgl Pinjam<br>Tgl Kembali</th>
 											<th>Harga</th>
+											<th>Status</th>
 	                    					<th>Aksi</th>
 	                    				</tr>
 	                  				</tfoot>
@@ -194,6 +204,7 @@
 										?>
 											<tr>
 												<td><?= $no++ ?></td>
+												<td><?= $pesanan->booking_code ?></td>
 												<td><?= $pesanan->nama_pemesan ?></td>
 												<td><?= $pesanan->nama_mobil ?></td>
 												<td><?= $pesanan->jenis_bayar ?></td>
@@ -201,6 +212,7 @@
 												   <label <?php if($pesanan->ddif<0){echo 'style="color:red"';} ?> ><?=date('d-m-Y',strtotime($pesanan->tgl_kembali))?></label>
 												</td>
 												<td align="right"><?=number_format($pesanan->harga,0,',','.')?></td>
+												<td><?= $pesanan->sts ?></td>
 												<td>
 												<div class="dropdown">
 													<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

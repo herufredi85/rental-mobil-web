@@ -13,6 +13,7 @@ class C_Uangkeluar extends Controller {
 		$this->addFunction('session');
 		$this->req = $this->library('Request');
 		$this->perjalanan = $this->model('M_Uangkeluar');
+		$this->pesanan = $this->model('M_Pesanan');
 	}
 
 	public function indextgl($tglstart,$tglend){
@@ -23,6 +24,7 @@ class C_Uangkeluar extends Controller {
 			'tglend' => $tglend,
 			'data_perjalanan' => $this->perjalanan->lihattgl($tglstart,$tglend),
             'data_ttuk'=>$this->perjalanan->gettuk(),
+			'data_pesanan'=>$this->pesanan->lihat(),
 			'no' => 1
 		];
 		$this->view('uangkeluar/index', $data);
@@ -44,10 +46,15 @@ class C_Uangkeluar extends Controller {
 	}
 
 	public function tambah($tglstart,$tglend){
-		if(!isset($_POST['tambah'])) redirect('uangkeluar');
+	
+
+			if(!isset($_POST['tambah'])) redirect('uangkeluar');
 		$rpuk=str_replace('.', '', $this->req->post('rpuk'));
         $tgluk=date('Y-m-d',strtotime($this->req->post('tgluk')));
+		$cb=explode("|",$this->req->post('kode_booking'));
 		$data = [
+			'booking_code' => $cb['1'],
+			'pesanan_id' => $cb['0'],
 			'typeuk' => $this->req->post('typeuk'),
 			'ketuk' => $this->req->post('ketuk'),
 			'rpuk' => $rpuk,
@@ -64,6 +71,8 @@ class C_Uangkeluar extends Controller {
 			setSession('error', 'Data gagal ditambahkan!');
 			redirect('uangkeluar/indextgl/'.$tglstart.'/'.$tglend);
 		}
+
+		
 	}
 
 	public function ubah($id,$tglstart,$tglend){

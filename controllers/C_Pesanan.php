@@ -17,6 +17,7 @@ class C_Pesanan extends Controller {
 		$this->pemesan = $this->model('M_Pemesan');
 		$this->perjalanan = $this->model('M_Perjalanan');
 		$this->perusahaan = $this->model('M_Perusahaan');
+		
 	}
 
 	public function index(){
@@ -36,6 +37,7 @@ class C_Pesanan extends Controller {
 
 	public function indextgl($tglstart,$tglend){
 		$data = [
+			'cb'=> $this->pesanan->generate_cb(),
 			'tglstart' => $tglstart,
 			'tglend' => $tglend,
 			'aktif' => 'pesanan',
@@ -69,12 +71,19 @@ class C_Pesanan extends Controller {
 	}
 
 	public function tambah($tglstart,$tglend){
+		if($this->req->post('id_pemesan')=="" or $this->req->post('id_perjalanan')=='' or $this->req->post('id_jenis_bayar')==''){
+			setSession('error', 'Lengkapi Data!');
+			redirect('pesanan/indextgl/'.$tglstart."/".$tglend);
+		}else{
 		if(!isset($_POST['tambah'])) redirect('pesanan/indextgl/'.$tglstart."/".$tglend);
 		$harga=str_replace('.', '', $this->req->post('harga'));
 		$tgl_pinjam=date('Y-m-d',strtotime($this->req->post('tgl_pinjam')));
 		$tgl_kembali=date('Y-m-d',strtotime($this->req->post('tgl_kembali')));
+		$pemesan=explode("|",$this->req->post('id_pemesan'));
+		
 		$data = [
-			'id_pemesan' => $this->req->post('id_pemesan'),
+			'booking_code'=> $this->req->post('kode_booking'),
+			'id_pemesan' => $pemesan[1],
 			'id_mobil' => $this->req->post('id_mobil'),
 			'id_perjalanan' => $this->req->post('id_perjalanan'),
 			'id_jenis_bayar' => $this->req->post('id_jenis_bayar'),
@@ -91,6 +100,7 @@ class C_Pesanan extends Controller {
 			setSession('error', 'Data gagal ditambahkan!');
 			redirect('pesanan/indextgl/'.$tglstart."/".$tglend);
 		}
+	}
 	}
 
 	public function ubah($id,$tglstart,$tglend){
@@ -109,7 +119,8 @@ class C_Pesanan extends Controller {
 			'judul' => 'Ubah Pesanan',
 			//'pemesan' => $this->pemesan->lihat_id($id_pemesan)->fetch_object(),
 			//'mobil' => $this->mobil->lihat_id($id_mobil)->fetch_object(),
-			//'perjalanan' => $this->perjalanan->lihat_id($id_perjalanan)->fetch_object(),
+			'id_perjalanan' => $id_perjalanan,
+			'data_perjalanan' => $this->perjalanan->lihat(),
 			'jenis_bayar' => $this->j_bayar->lihat_id($id_jenis_bayar)->fetch_object(),
 			'pesanan' => $pesanan
 		];
@@ -121,6 +132,7 @@ class C_Pesanan extends Controller {
 		$harga=str_replace('.', '', $this->req->post('harga'));
 		$tgl_kembali=date('Y-m-d',strtotime($this->req->post('tgl_kembali')));
 		$data = [
+			'id_perjalanan' => $this->req->post('id_perjalanan'),
 			'harga' => $harga,
 			'tgl_kembali' => $tgl_kembali,
 		];

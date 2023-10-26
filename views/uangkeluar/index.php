@@ -48,6 +48,15 @@
 							</div>
 							<div class="card-body">
 								<form method="POST" action="<?= base_url('uangkeluar/tambah/'.$tglstart.'/'.$tglend) ?>">
+								<div class="form-group">
+										<label for="asal">Kode Booking</label>
+										<select name="kode_booking" id="kode_booking" class="form-control" required="required">
+                                            <option value="">-PILIH-</option>
+								  			<?php while($pesanan = $data_pesanan->fetch_object()) : ?>
+												<option value="<?= $pesanan->id ?>|<?= $pesanan->booking_code ?>"><?= $pesanan->booking_code ?></option>
+								  			<?php endwhile; ?>
+								  		</select>
+								  	</div>
 								  	<div class="form-group">
 										<label for="asal">Jenis Uang Keluar</label>
 										<select name="typeuk" id="typeuk" class="form-control" required="required">
@@ -111,11 +120,12 @@
 							  			</button>
 									</div>
 								<?php endif ?>
-
-								<table class="table table-bordered" id="dataTable" width="" cellspacing="0">
+								<div class="table-responsive">
+								<table class="table table-bordered" id="dataTable" width="" cellspacing="0" style="font-size: 13px;">
 	                  				<thead>
 	                    				<tr>
 	                    					<th>No</th>
+											<th>Kode Booking</th>
 	                    					<th>Jenis Uang Keluar</th>
 	                    					<th>Deskripsi</th>
 	                    					<th>Tanggal Uang Keluar</th>
@@ -126,6 +136,7 @@
 	                  				<tfoot>
 	                    				<tr>
 	                    				    <th>No</th>
+											<th>Kode Booking</th>
 	                    					<th>Jenis Uang Keluar</th>
 	                    					<th>Deskripsi</th>
 	                    					<th>Tanggal Uang Keluar</th>
@@ -141,6 +152,7 @@
 										?>
 											<tr>
 												<td><?= $no++ ?></td>
+												<td><a href="<?= base_url('pesanan/detail/' . $pesanan->pesanan_id.'/'.$tglstart.'/'.$tglend) ?>"><?= $pesanan->booking_code ?></a></td>
 												<td><?= $pesanan->nametuk ?></td>
 												<td><?= $pesanan->ketuk ?></td>
 												<td><?=date('d-m-Y',strtotime($pesanan->tgluk))?></td>
@@ -164,6 +176,7 @@
 								<div>
 									<hr>
 									<div style="text-align: right;"><h3>Total : Rp <?=number_format($tot,0,',','.')?> </h3></div>
+								</div>
 								</div>
 							</div>
 						</div>
