@@ -55,6 +55,8 @@ class C_Perusahaan extends Controller {
                         'telp' => $this->req->post('telp'),
                         'dateupdate'=>date('Y-m-d H:i:s'),
 						'logo' => $img_name . '.' . $ekstensi,
+						'account'=>$this->req->post('account'),
+						'city'=>$this->req->post('kota'),
 						//'id_perusahaanref'=>$_SESSION['login']['id_perusahaanref'],
                         'userupdate'=>$_SESSION['login']['userid']
 					];
@@ -69,7 +71,9 @@ class C_Perusahaan extends Controller {
                         'telp' => $this->req->post('telp'),
                         'dateupdate'=>date('Y-m-d H:i:s'),
 						//'logo' => $img_name . '.' . $ekstensi,
-						//'id_perusahaanref'=>$_SESSION['login']['id_perusahaanref'],
+						'owner'=>$this->req->post('owner'),
+						'account'=>$this->req->post('account'),
+						'city'=>$this->req->post('kota'),
                         'userupdate'=>$_SESSION['login']['userid']
 				];
 			} //die('gambar error');

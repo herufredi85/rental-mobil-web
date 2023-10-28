@@ -11,7 +11,7 @@
  Target Server Version : 100427
  File Encoding         : 65001
 
- Date: 26/10/2023 10:14:58
+ Date: 29/10/2023 06:11:31
 */
 
 SET NAMES utf8mb4;
@@ -210,13 +210,16 @@ CREATE TABLE `tperusahaan`  (
   `email` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   `logo` text CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL,
   `dateupdate` datetime(0) NULL DEFAULT NULL,
-  `userupdate` int NULL DEFAULT NULL
+  `userupdate` int NULL DEFAULT NULL,
+  `owner` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  `account` text CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL,
+  `city` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL
 ) ENGINE = InnoDB CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of tperusahaan
 -- ----------------------------
-INSERT INTO `tperusahaan` VALUES (1, 'PT.Berdikari', 'Jl.Sei bahorok Medan', '081361333457', 'email@email.com', '1-1697359751.png', '2023-10-15 19:18:56', 4);
+INSERT INTO `tperusahaan` VALUES (1, 'Dearma Rental Mobil Medan', 'Jl Pendidikan/Sehati No.8 ', '08116220057,081262520057,08185', 'email@email.com', '1-1698448694.png', '2023-10-29 05:53:45', 4, 'Richard F Sinaga ', 'BCA : 8280 315 444 A/N : Richard Fernando Sinaga <br>\r\nMANDIRI : 9000033656522 A/N : Richard Fernando Sinaga ', 'Medan');
 
 -- ----------------------------
 -- Table structure for ttuk

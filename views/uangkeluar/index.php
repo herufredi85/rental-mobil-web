@@ -97,9 +97,13 @@
 										<td><input type="text" data-provide="datepicker" data-date-format="dd-mm-yyyy" data-date-autoclose="true" value="<?=$tglstart?>" name="tglstart" id="tglstart" required="required" autocomplete="off" class="form-control"></td>
 										<td>s/d</td>
 										<td><input type="text" data-provide="datepicker" data-date-format="dd-mm-yyyy" data-date-autoclose="true" value="<?=$tglend?>" name="tglend" id="tglend" required="required" autocomplete="off" class="form-control"></td>
-										<td><button class="btn btn-secondary " type="submit" name="tampil" >
+										<td><button class="btn btn-secondary " type="submit" name="tampil" value="tampil" >
 														Tampil
-													</button></td>
+													</button>
+													<button class="btn btn-success " type="submit" name="tampil" value="excel" >
+														excel
+													</button>
+										</td>
 									</tr>
 								</table>
 								</form>
@@ -147,6 +151,7 @@
 	                 				<tbody>
                                      <?php 
 									 $tot=0;
+									 
 									 while($pesanan = $data_perjalanan->fetch_object()) :
 										$tot= $tot+$pesanan->rpuk;
 										?>

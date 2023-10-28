@@ -90,10 +90,10 @@
 											</button>
 										</div>
 									<?php endif ?>
-
+									<div class="table-responsive">
 									<table class="table table-bordered"  cellspacing="0">
 										<thead
-											<tr
+											<tr>
 												<th align="center">No</th>
 												<th align="center">Tanggal</th>
 												<th align="center">Uang Masuk</th>
@@ -169,7 +169,7 @@
 											</td>
 										</tbody>
 									</table>
-
+									</div>
 								</div>
 							</div>
 						</div>

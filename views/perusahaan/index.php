@@ -67,6 +67,18 @@
 								  		<label for="password2">Email</label>
 								  		<input type="text" value="<?=$akun->email?>" name="email" id="email" required="required" placeholder="ketik" autocomplete="off" class="form-control">
 								  	</div>
+									  <div class="form-group">
+								  		<label for="password2">Pemilik</label>
+								  		<input type="text" value="<?=$akun->owner?>" name="owner" id="owner" required="required" placeholder="ketik" autocomplete="off" class="form-control">
+								  	</div>
+									  <div class="form-group">
+								  		<label for="password2">Kota</label>
+								  		<input type="text" value="<?=$akun->city?>" name="kota" id="kota" required="required" placeholder="ketik" autocomplete="off" class="form-control">
+								  	</div>
+									  <div class="form-group">
+								  		<label for="password2">No. Rekening</label>
+								  		<textarea class="form-control" id="account" name="account" rows="3" wrap="soft"><?=$akun->account?></textarea>
+								  	</div>
 								  	<div class="form-group">
 								  		<label for="foto">Logo</label>
 								  		<input type="file" name="foto" id="foto"  placeholder="ketik" autocomplete="off" class="form-control-file">

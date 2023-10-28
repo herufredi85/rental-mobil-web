@@ -55,7 +55,9 @@ class C_Pesanan extends Controller {
 	public function tampil(){
 		$tglstart=$this->req->post('tglstart');
 		$tglend=$this->req->post('tglend');
+		if($this->req->post('tampil')=='tampil'){
 		$data = [
+			'cb'=> $this->pesanan->generate_cb(),
 			'tglstart' => $tglstart,
 			'tglend' => $tglend,
 			'aktif' => 'pesanan',
@@ -68,6 +70,18 @@ class C_Pesanan extends Controller {
 			'no' => 1
 		];
 		$this->view('pesanan/index', $data);
+	}else{
+		$data = [
+			'tglstart' => $tglstart,
+			'tglend' => $tglend,
+			'aktif' => 'pesanan',
+			'judul' => 'Data Pesanan',
+			'data_pesanan' => $this->pesanan->lihattgl($tglstart,$tglend),
+			'perusahaan' => $this->perusahaan->lihat()->fetch_object(),
+			'no' => 1
+		];
+		$this->view('pesanan/excel', $data);
+	}
 	}
 
 	public function tambah($tglstart,$tglend){

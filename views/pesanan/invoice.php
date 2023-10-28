@@ -72,53 +72,102 @@
 <body>
   <div class="invoice">
     <div class="invoice-header">
-      <h1>Invoice Rental Mobil</h1>
+      <h1>Invoice </h1>
     </div>
+<table width='100%'>
+  <tr>
+    <td width='70%'> 
+      <table>
+        <tr>
+          <td><?=$perusahaan->nama_perusahaan?></td>
+        </tr>
+        <tr>
 
-    <div class="invoice-address">
-      <h2><?=$perusahaan->nama_perusahaan?></h2>
-      <p>Alamat  : <?=$perusahaan->alamat?></p>
-      <p>Telepon : <?=$perusahaan->telp?></p>
-      <p>Email   : <?=$perusahaan->email?></p>
-    </div>
+          <td><?=$perusahaan->alamat?></td>
+        </tr>
+        <tr>
+          <td><?=$perusahaan->telp?></td>
+        </tr>
+      </table>
+    </td>
+    <td>
+      <table>
+        <tr>
+          <td>No.Invoice</td>
+          <td>:</td>
+          <td><?=$pesanan->booking_code?></td>
+        </tr>
+        <tr>
+          <td>Date</td>
+          <td>:</td>
+          <td><?=date('d M Y',strtotime($pesanan->tgl_pinjam))?></td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+
+    <table >
+        <tr >
+          <td>Customer</td>
+          <td>:</td>
+          <td><h3><?=$pesanan->id_pemesan?></h3></td>
+        </tr>
+
+      </table>
+
+    </td>
+  </tr>
+</table>
+   
 
     <table class="invoice-items" >
        
       <thead>
         <tr>
-        <th>Kode Booking</th>
-          <th>Nama Pemesan</th>
-          <th>Jenis Pembayaran</th>
-          <th>Jenis Mobil</th>
-          <th>Tanggal Pinjam</th>
-          <th>Tanggal Kembali</th>
-          <th>Status</th>
-          <th>Nominal</th>
+
+          <th>No</th>
+          <th>Deskripsi</th>
+          <th>Qty</th>
+          <th>Unit Price</th>
+          <th>Total</th>
         </tr>
       </thead>
       <tbody >
-        <tr>
-        <td ><?=$pesanan->booking_code?></td>
-          <td ><?=$pesanan->id_pemesan?></td>
-          <td><?=$pesanan->jenis_bayar?></td>
-          <td><?=$pesanan->id_mobil?></td>
-          <td><?=date('d-m-Y',strtotime($pesanan->tgl_pinjam))?></td>
-          <td><?=date('d-m-Y',strtotime($pesanan->tgl_kembali))?></td>
-          <td ><?=$pesanan->asal?></td>
-          <td><?=number_format($pesanan->harga,0,',','.')?></td>
+        <tr >
+          <td style="vertical-align: top;">1.</td>
+          <td ><?=$pesanan->id_mobil?><br>Note :
+               <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+          </td>
+          <td style="vertical-align: top;">1</td>
+          <td style="text-align: right; vertical-align: top;"><?=number_format($pesanan->harga,0,',','.')?></td>
+          <td style="text-align: right; vertical-align: top;"><?=number_format($pesanan->harga,0,',','.')?></td>
         </tr>
- 
+      <tr>
+        <td colspan="4" style="text-align: center;"><B>TOTAL</b></td>
+        <td style="text-align: right;"><b><?=number_format($pesanan->harga,0,',','.')?></b></td>
+      </tr>
       </tbody>
+    </table>
+    <table>
+      <tr>
+        <td>Transfer :<br><?=$perusahaan->account?></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+      </tr>
+      <tr>
+        <td>Medan <?=date('d M Y')?><br>Hormat Kami,</td>
+      </tr>
     </table>
     <div class="invoice-total">
     <table>
         <tr>
             <td>
-    <div style="text-align: center;">
-      Pemesan
-      <br><br>
-      <br><br>
-      ---------------------
+    <div style="text-align: left;">
+      <img src="<?=base_url()?>uploads/perusahaan/<?=$perusahaan->logo?>"><br>
+      <?=$perusahaan->owner?>
     </div></td>
         </tr>
     </table>

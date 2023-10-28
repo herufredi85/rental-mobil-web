@@ -100,7 +100,7 @@
 							  			</button>
 									</div>
 								<?php endif ?>
-
+								<div class="table-responsive">
 								<table class="table table-bordered" id="dataTable" width="" cellspacing="0">
 	                  				<thead>
 	                    				<tr>
@@ -133,6 +133,7 @@
 										<?php endwhile; ?>
 									</tbody>
               					</table>
+								</div>
 							</div>
 						</div>
 					</div>
