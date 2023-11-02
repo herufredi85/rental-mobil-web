@@ -20,6 +20,12 @@ class M_Pemesan extends Model {
 		return $query;
 	}
 
+	public function pemesanan_detail($id){
+		$query = $this->get_where('tbl_pesanan2', ['id_pemesan' => $id]);
+		$query = $this->execute();
+		return $query;
+	}
+
 	public function ubah($data, $id){
 		$query = $this->update('tbl_pemesan', $data, ['id' => $id]);
 		$query = $this->execute();

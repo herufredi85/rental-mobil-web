@@ -70,7 +70,7 @@ class C_Rekap extends Controller {
 			'perusahaan' => $this->perusahaan->lihat()->fetch_object(),
 			'no' => 1
 		];
-		$this->view('rekap/xls', $data);
+		$this->view('rekap/xlscomposer', $data);
 	}
 
 	public function ubah($id,$tglstart,$tglend){

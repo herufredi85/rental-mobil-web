@@ -33,9 +33,7 @@ class C_Uangkeluar extends Controller {
 
 	public function tampil(){
 		$tglstart=$this->req->post('tglstart');
-		$tglend=$this->req->post('tglend');
-		if($this->req->post('tampil')=='tampil'){
-			
+		$tglend=$this->req->post('tglend');		
 			$data = [
 				'aktif' => 'uangkeluar',
 				'judul' => 'Data Pengeluaran',
@@ -43,20 +41,28 @@ class C_Uangkeluar extends Controller {
 				'tglend' => $tglend,
 				'data_perjalanan' => $this->perjalanan->lihattgl($tglstart,$tglend),
 				'data_ttuk'=>$this->perjalanan->gettuk(),
-				//'data_pesanan'=>$this->pesanan->lihat(),
+				'data_pesanan'=>$this->pesanan->lihat(),
 				'no' => 1
 			];
 			$this->view('uangkeluar/index', $data);
-		}else{
+
+	}
+
+	public function xls($tglstart,$tglend){
+		//$tglstart=$this->req->post('tglstart');
+		//$tglend=$this->req->post('tglend');
+
 			$data=[
 				'tglstart' => $tglstart,
 				'tglend' => $tglend,
 				'perusahaan' => $this->perusahaan->lihat()->fetch_object(),
 				'data_perjalanan' => $this->perjalanan->lihattgl($tglstart,$tglend),
 			];
-			$this->view('uangkeluar/excel', $data);
-		}
+			//$this->view('uangkeluar/excel', $data);
+			$this->view('uangkeluar/excelcomposer', $data);
+		
 	}
+
 
 	public function tambah($tglstart,$tglend){
 	

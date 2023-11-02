@@ -57,6 +57,7 @@ class C_Perusahaan extends Controller {
 						'logo' => $img_name . '.' . $ekstensi,
 						'account'=>$this->req->post('account'),
 						'city'=>$this->req->post('kota'),
+						'prefix'=>$this->req->post('prefix'),
 						//'id_perusahaanref'=>$_SESSION['login']['id_perusahaanref'],
                         'userupdate'=>$_SESSION['login']['userid']
 					];
@@ -73,6 +74,7 @@ class C_Perusahaan extends Controller {
 						//'logo' => $img_name . '.' . $ekstensi,
 						'owner'=>$this->req->post('owner'),
 						'account'=>$this->req->post('account'),
+						'prefix'=>$this->req->post('prefix'),
 						'city'=>$this->req->post('kota'),
                         'userupdate'=>$_SESSION['login']['userid']
 				];

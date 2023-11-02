@@ -79,7 +79,7 @@
 										<input type="text" data-provide="datepicker" data-date-format="dd-mm-yyyy" data-date-autoclose="true" value="<?= date('d-m-Y')?>" name="tgluk" id="tgluk" required="required" autocomplete="off" class="form-control">
 								  	</div>
 								  	<div class="form-group">
-										<button type="submit" class="btn btn-sm btn-success" name="tambah"><i class="fa fa-plus"></i> Tambah</button>
+										<button type="submit" class="btn btn-sm btn-info" name="tambah"><i class="fa fa-plus"></i> Tambah</button>
 										<button type="reset" class="btn btn-sm btn-danger"><i class="fa fa-times"></i> Batal</button>
 								  	</div>
 								</form>
@@ -97,12 +97,13 @@
 										<td><input type="text" data-provide="datepicker" data-date-format="dd-mm-yyyy" data-date-autoclose="true" value="<?=$tglstart?>" name="tglstart" id="tglstart" required="required" autocomplete="off" class="form-control"></td>
 										<td>s/d</td>
 										<td><input type="text" data-provide="datepicker" data-date-format="dd-mm-yyyy" data-date-autoclose="true" value="<?=$tglend?>" name="tglend" id="tglend" required="required" autocomplete="off" class="form-control"></td>
-										<td><button class="btn btn-secondary " type="submit" name="tampil" value="tampil" >
+										<td><button class="btn btn-secondary btn-sm " type="submit" name="tampil" value="tampil" >
 														Tampil
 													</button>
-													<button class="btn btn-success " type="submit" name="tampil" value="excel" >
+													<!-- <button class="btn btn-success " type="submit" name="tampil" value="excel" >
 														excel
-													</button>
+													</button> -->
+													<a href="#" target="_blank" onclick="xls()" class="btn btn-sm btn-success"><i class="fa fa-times"></i> Excel</a>
 										</td>
 									</tr>
 								</table>
@@ -164,12 +165,12 @@
 												<td align="right"><?=number_format($pesanan->rpuk,0,',','.')?></td>
 												<td>
 												<div class="dropdown">
-													<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+													<button class="btn btn-secondary dropdown-toggle btn-sm" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 														Aksi
 													</button>
 													<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-													<a href="<?= base_url('uangkeluar/ubah/' . $pesanan->id.'/'.$tglstart.'/'.$tglend) ?>" class="btn btn-sm btn-info mb-2"><i class="fa fa-pen"></i> Ubah</a><br>
-	                 								<a href="<?= base_url('uangkeluar/hapus/' . $pesanan->id.'/'.$tglstart.'/'.$tglend) ?>" class="btn btn-sm btn-danger" onclick="return confirm('apakah anda yakin?')"><i class="fa fa-trash"></i> Hapus</a>
+													<p><a href="<?= base_url('uangkeluar/ubah/' . $pesanan->id.'/'.$tglstart.'/'.$tglend) ?>" class="btn btn-sm btn-info mb-2"><i class="fa fa-pen"></i> Ubah</a></p>
+	                 								<p><a href="<?= base_url('uangkeluar/hapus/' . $pesanan->id.'/'.$tglstart.'/'.$tglend) ?>" class="btn btn-sm btn-danger" onclick="return confirm('apakah anda yakin?')"><i class="fa fa-trash"></i> Hapus</a></p>
 													</div>
 													</div>
 													
@@ -207,6 +208,15 @@
   	<script src="<?= base_url('sb-admin-2/') ?>/vendor/datatables/dataTables.bootstrap4.min.js"></script>
 	<script src="<?= base_url('sb-admin-2/') ?>/js/demo/datatables-demo.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+	<script>
+		function xls() {
+			var tglstart = $('#tglstart').val();
+			var tglend = $('#tglend').val();
+			var v_thn = $('#v_thn').val();
+			window.open("<?= base_url('uangkeluar/xls') ?>/"+tglstart+"/"+tglend);
+			return false;
+		}
+	</script>
 </body>
 
 </html>

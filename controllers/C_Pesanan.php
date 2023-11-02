@@ -52,10 +52,26 @@ class C_Pesanan extends Controller {
 		$this->view('pesanan/index', $data);
 	}
 
+	public function add($tglstart,$tglend){
+		$data = [
+			'cb'=> $this->pesanan->generate_cb(),
+			'aktif' => 'pesanan',
+			'tglstart' => $tglstart,
+			'tglend' => $tglend,
+			'judul' => 'Data Pesanan',
+			'data_pemesan' => $this->pemesan->lihat(),
+			'data_mobil' => $this->mobil->lihat(),
+			'data_perjalanan' => $this->perjalanan->lihat(),
+			'data_jenis_bayar' => $this->j_bayar->lihat(),
+			'no' => 1
+		];
+		$this->view('pesanan/add', $data);
+	}
+
+
 	public function tampil(){
 		$tglstart=$this->req->post('tglstart');
 		$tglend=$this->req->post('tglend');
-		if($this->req->post('tampil')=='tampil'){
 		$data = [
 			'cb'=> $this->pesanan->generate_cb(),
 			'tglstart' => $tglstart,
@@ -70,7 +86,12 @@ class C_Pesanan extends Controller {
 			'no' => 1
 		];
 		$this->view('pesanan/index', $data);
-	}else{
+
+	}
+
+	public function xls($tglstart,$tglend){
+
+
 		$data = [
 			'tglstart' => $tglstart,
 			'tglend' => $tglend,
@@ -80,25 +101,27 @@ class C_Pesanan extends Controller {
 			'perusahaan' => $this->perusahaan->lihat()->fetch_object(),
 			'no' => 1
 		];
-		$this->view('pesanan/excel', $data);
-	}
+		//$this->view('pesanan/excel', $data);
+		$this->view('pesanan/excelcomposer', $data);
+	
 	}
 
 	public function tambah($tglstart,$tglend){
-		if($this->req->post('id_pemesan')=="" or $this->req->post('id_perjalanan')=='' or $this->req->post('id_jenis_bayar')==''){
-			setSession('error', 'Lengkapi Data!');
-			redirect('pesanan/indextgl/'.$tglstart."/".$tglend);
-		}else{
+		//print_r($_POST['deskripsi']);
+		//exit();
+	
 		if(!isset($_POST['tambah'])) redirect('pesanan/indextgl/'.$tglstart."/".$tglend);
 		$harga=str_replace('.', '', $this->req->post('harga'));
 		$tgl_pinjam=date('Y-m-d',strtotime($this->req->post('tgl_pinjam')));
 		$tgl_kembali=date('Y-m-d',strtotime($this->req->post('tgl_kembali')));
 		$pemesan=explode("|",$this->req->post('id_pemesan'));
 		
+		
+
 		$data = [
 			'booking_code'=> $this->req->post('kode_booking'),
 			'id_pemesan' => $pemesan[1],
-			'id_mobil' => $this->req->post('id_mobil'),
+			//'id_mobil' => $this->req->post('id_mobil'),
 			'id_perjalanan' => $this->req->post('id_perjalanan'),
 			'id_jenis_bayar' => $this->req->post('id_jenis_bayar'),
 			'harga' => $harga,
@@ -106,15 +129,30 @@ class C_Pesanan extends Controller {
 			'tgl_kembali' => $tgl_kembali,
 			'id_perusahaanref'=>$_SESSION['login']['id_perusahaanref']
 		];
+		$id=$this->pesanan->tambah($data);
+		$lid=$this->pesanan->lid();
+		//print_r($lid);
+		$count=count($_POST['deskripsi']);
+		for($i=0;$i<$count;$i++){
+			$price=str_replace('.', '', $_POST['price'][$i]);
+			$datadetail=[
+				'pesanan_id'=>$lid,
+				'deskripsi'=>$_POST['deskripsi'][$i],
+				'qty'=>$_POST['qty'][$i],
+				'price'=>$price
+			];
+			$this->pesanan->tambahdetail($datadetail);
+		}
+	
 
-		if($this->pesanan->tambah($data)){
+		if($id){
 			setSession('success', 'Data berhasil ditambahkan!');
 			redirect('pesanan/indextgl/'.$tglstart."/".$tglend);
 		} else {
 			setSession('error', 'Data gagal ditambahkan!');
 			redirect('pesanan/indextgl/'.$tglstart."/".$tglend);
 		}
-	}
+	
 	}
 
 	public function ubah($id,$tglstart,$tglend){
@@ -131,10 +169,12 @@ class C_Pesanan extends Controller {
 			'tglend' => $tglend,
 			'aktif' => 'pesanan',
 			'judul' => 'Ubah Pesanan',
+			'data_pemesan' => $this->pemesan->lihat(),
 			//'pemesan' => $this->pemesan->lihat_id($id_pemesan)->fetch_object(),
-			//'mobil' => $this->mobil->lihat_id($id_mobil)->fetch_object(),
+			'detailid' => $this->pesanan->detailid($id),
 			'id_perjalanan' => $id_perjalanan,
 			'data_perjalanan' => $this->perjalanan->lihat(),
+			'data_jenis_bayar' => $this->j_bayar->lihat(),
 			'jenis_bayar' => $this->j_bayar->lihat_id($id_jenis_bayar)->fetch_object(),
 			'pesanan' => $pesanan
 		];
@@ -145,11 +185,27 @@ class C_Pesanan extends Controller {
 		if(!isset($id) || $this->pesanan->cek($id)->num_rows == 0 || !isset($_POST['ubah'])) redirect('pesanan/indextgl/'.$tglstart."/".$tglend);
 		$harga=str_replace('.', '', $this->req->post('harga'));
 		$tgl_kembali=date('Y-m-d',strtotime($this->req->post('tgl_kembali')));
+		$pemesan=explode("|",$this->req->post('id_pemesan'));
 		$data = [
+			'id_pemesan' => $pemesan[1],
+			'id_jenis_bayar'=> $this->req->post('id_jenis_bayar'),
 			'id_perjalanan' => $this->req->post('id_perjalanan'),
 			'harga' => $harga,
 			'tgl_kembali' => $tgl_kembali,
 		];
+		$this->pesanan->hapusdetail($id);
+		$count=count($_POST['deskripsi']);
+		for($i=0;$i<$count;$i++){
+			$price=str_replace('.', '', $_POST['price'][$i]);
+			$datadetail=[
+				'pesanan_id'=>$id,
+				'deskripsi'=>$_POST['deskripsi'][$i],
+				'qty'=>$_POST['qty'][$i],
+				'price'=>$price
+			];
+			$this->pesanan->tambahdetail($datadetail);
+		}
+	
 		if($this->pesanan->ubah($data, $id)){
 			setSession('success', 'Data berhasil diubah!');
 			redirect('pesanan/indextgl/'.$tglstart."/".$tglend);
@@ -179,11 +235,21 @@ class C_Pesanan extends Controller {
 			'tglend' => $tglend,
 			'aktif' => 'pesanan',
 			'judul' => 'Detail Pesanan',
+			'detailid' => $this->pesanan->detailid($id),
 			'pesanan' => $this->pesanan->detail($id)->fetch_object(),
 		];
 
 		$this->view('pesanan/detail', $data);
 	}
+
+	public function detailid($id){
+		$data = [
+			'detailid' => $this->pesanan->detailid($id),
+		];
+
+		$this->view('pesanan/detailid', $data);
+	}
+
 
 	public function invoice($id){
 		if(!isset($id) || $this->pesanan->cek($id)->num_rows == 0) redirect('pesanan');
@@ -192,6 +258,7 @@ class C_Pesanan extends Controller {
 			'aktif' => 'pesanan',
 			'judul' => 'Detail Pesanan',
 			'pesanan' => $this->pesanan->detail($id)->fetch_object(),
+			'pesananid' => $this->pesanan->detailid($id),
 			'perusahaan' => $this->perusahaan->lihat()->fetch_object(),
 		];
 

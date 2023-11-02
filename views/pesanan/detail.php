@@ -40,7 +40,7 @@
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-md-6">
+					<div class="col-md-12">
 						<div class="card shadow">
 							<div class="card-header">
 								<h6 class="m-0 font-weight-bold text-primary"><?= $judul ?> - <?= $pesanan->id_pemesan ?></h6>
@@ -52,10 +52,11 @@
 										Nama Pemesan <br>
 										Tanggal Pinjam <br>
 										Tanggal Kembali <br>
-										Mobil <br>
+										
 										Status <br>
 										Total Harga <br>
 										Jenis Layanan <br>
+										Deskripsi Pesanan <br>
 									</div>
 									<div class="col-sm-1">
 										: <br>
@@ -72,10 +73,40 @@
 										<strong><?= $pesanan->id_pemesan ?></strong><br>
 										<strong><?= date('d-m-Y',strtotime($pesanan->tgl_pinjam))?></strong><br>
 										<strong><?= date('d-m-Y',strtotime($pesanan->tgl_kembali))?></strong><br>
-										<strong><?= $pesanan->id_mobil ?></strong><br>
 										<strong><?= $pesanan->asal ?></strong><br>
 										<strong>Rp. <?= number_format($pesanan->harga, 0, ',', '.') ?></strong><br>
 										<strong><?= $pesanan->jenis_bayar ?></strong><br>
+										<table class="table table-border" width="100%">
+	                  				<thead>
+									  <tr>
+	                    					<th>No</th>
+											<th>Deskripsi</th>
+	                    					<th>Qty</th>
+	                    					<th>Harga</th>			
+	                    				</tr>
+	                 				</thead>
+	                  		
+	                 				<tbody>
+                                     <?php 
+									 $tot=0;
+                                    $no=1;
+									 while($pes = $detailid->fetch_object()) :
+										//$tot= $tot+$pesanan->harga;
+										?>
+										<tr>
+											<td><?= $no++ ?></td>
+												<td><?= $pes->deskripsi ?></td>
+												<td><?= $pes->qty ?></td>
+												<td style="text-align: end;"><?=number_format($pes->price, 0, ',', '.') ?></td>
+												
+										</tr>
+										<?php endwhile; ?>
+                                      
+										
+                                    
+	                 				</tbody>
+              					</table>
+										
 									</div>
 								</div>
 								<hr>

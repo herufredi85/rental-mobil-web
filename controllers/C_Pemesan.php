@@ -36,6 +36,15 @@ class C_Pemesan extends Controller{
 		$this->view('pemesan/detail', $data);
 	}
 
+	public function detailpemesanan($id){
+		$detail=$this->pemesan->detail($id)->fetch_object();
+		$nama=$detail->nama;
+		$data = [
+			'detailid' => $this->pemesan->pemesanan_detail($nama),
+		];
+		$this->view('pemesan/detailpesanan', $data);
+	}
+
 	public function tambah(){
 		if(!isset($_POST['tambah'])) redirect('pemesan');
 

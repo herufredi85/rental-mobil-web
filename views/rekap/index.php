@@ -13,6 +13,7 @@
 	<link href="<?= base_url('sb-admin-2/') ?>/css/sb-admin-2.min.css" rel="stylesheet">
 	<link href="<?= base_url('sb-admin-2/') ?>/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+	<script src="<?= base_url('sb-admin-2/') ?>/vendor/jquery/jquery.min.js"></script>
 </head>
 
 <body id="page-top">
@@ -59,7 +60,7 @@
 											<input type="text" data-provide="datepicker" data-date-format="dd-mm-yyyy" data-date-autoclose="true" value="<?= date('d-m-Y', strtotime($tglend)) ?>" name="tglend" id="tglend" required="required" autocomplete="off" class="form-control">
 										</div>
 										<div class="form-group">
-											<button type="submit" class="btn btn-sm btn-success" name="tampil"><i class="fa fa-info"></i> Tampil</button>
+											<button type="submit" class="btn btn-sm btn-info" name="tampil"><i class="fa fa-info"></i> Tampil</button>
 											<a href="#" target="_blank" onclick="xls()" class="btn btn-sm btn-danger"><i class="fa fa-times"></i> Excel</a>
 
 										</div>
@@ -185,7 +186,7 @@
 		<i class="fas fa-angle-up"></i>
 	</a>
 
-	<script src="<?= base_url('sb-admin-2/') ?>/vendor/jquery/jquery.min.js"></script>
+	
 	<script src="<?= base_url('sb-admin-2/') ?>/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 	<script src="<?= base_url('sb-admin-2/') ?>/vendor/jquery-easing/jquery.easing.min.js"></script>
 	<script src="<?= base_url('sb-admin-2/') ?>/js/sb-admin-2.min.js"></script>

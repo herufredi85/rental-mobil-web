@@ -9,16 +9,16 @@
     }
 
     .invoice {
-      width: 80%;
+      width: 90%;
       margin: 0 auto;
-      padding: 20px;
+      padding: 10px;
       background-color: #fff;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     }
 
     .invoice-header {
       text-align: center;
-      margin-bottom: 20px;
+      margin-bottom: 10px;
     }
 
     .invoice-header h1 {
@@ -27,7 +27,7 @@
     }
 
     .invoice-address {
-      margin-bottom: 20px;
+      margin-bottom: 10px;
     }
 
     .invoice-address h2 {
@@ -124,26 +124,30 @@
 
     <table class="invoice-items" >
        
-      <thead>
-        <tr>
+      <thead >
+        <tr >
 
-          <th>No</th>
-          <th>Deskripsi</th>
-          <th>Qty</th>
-          <th>Unit Price</th>
-          <th>Total</th>
+          <th style="background-color: #76b5c5; text-align: center">No</th>
+          <th style="background-color: #76b5c5; text-align: center">Deskripsi</th>
+          <th style="background-color: #76b5c5; text-align: center">Qty</th>
+          <th style="background-color: #76b5c5; text-align: center">Unit Price</th>
+          <th style="background-color: #76b5c5; text-align: center">Total</th>
         </tr>
       </thead>
       <tbody >
+        <?php
+        $no=1;
+        while ($pid = $pesananid->fetch_object()) :
+        ?>
         <tr >
-          <td style="vertical-align: top;">1.</td>
-          <td ><?=$pesanan->id_mobil?><br>Note :
-               <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+          <td style="vertical-align: top;"><?=$no++?></td>
+          <td ><?=$pid->deskripsi?>
           </td>
-          <td style="vertical-align: top;">1</td>
-          <td style="text-align: right; vertical-align: top;"><?=number_format($pesanan->harga,0,',','.')?></td>
-          <td style="text-align: right; vertical-align: top;"><?=number_format($pesanan->harga,0,',','.')?></td>
+          <td style="vertical-align: top;"><?=number_format($pid->qty,0,',','.')?></td>
+          <td style="text-align: right; vertical-align: top;"><?=number_format($pid->price,0,',','.')?></td>
+          <td style="text-align: right; vertical-align: top;"><?=number_format($pid->price,0,',','.')?></td>
         </tr>
+        <?php endwhile;?>
       <tr>
         <td colspan="4" style="text-align: center;"><B>TOTAL</b></td>
         <td style="text-align: right;"><b><?=number_format($pesanan->harga,0,',','.')?></b></td>

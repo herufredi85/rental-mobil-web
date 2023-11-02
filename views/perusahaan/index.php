@@ -75,6 +75,11 @@
 								  		<label for="password2">Kota</label>
 								  		<input type="text" value="<?=$akun->city?>" name="kota" id="kota" required="required" placeholder="ketik" autocomplete="off" class="form-control">
 								  	</div>
+									
+									  <div class="form-group">
+								  		<label for="password2">Prefix</label>
+								  		<input type="text" value="<?=$akun->prefix?>" name="prefix" id="prefix" required="required" placeholder="ketik" autocomplete="off" class="form-control">
+								  	</div>
 									  <div class="form-group">
 								  		<label for="password2">No. Rekening</label>
 								  		<textarea class="form-control" id="account" name="account" rows="3" wrap="soft"><?=$akun->account?></textarea>
@@ -85,7 +90,7 @@
 								  		ukuran foto wajib 200px X 200px
 								  	</div>
 								  	<div class="form-group">
-										<button type="submit" class="btn btn-sm btn-success" name="tambah"><i class="fa fa-plus"></i> Tambah</button>
+										<button type="submit" class="btn btn-sm btn-success" name="tambah"><i class="fa fa-plus"></i> Update</button>
 										<button type="reset" class="btn btn-sm btn-danger"><i class="fa fa-times"></i> Batal</button>
 								  	</div>
 								</form>
