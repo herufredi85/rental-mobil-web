@@ -11,7 +11,7 @@
  Target Server Version : 100427
  File Encoding         : 65001
 
- Date: 29/10/2023 06:11:31
+ Date: 02/11/2023 10:16:15
 */
 
 SET NAMES utf8mb4;
@@ -110,7 +110,7 @@ CREATE TABLE `tbl_pemesan`  (
   `foto` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `id_perusahaanref` int NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of tbl_pemesan
@@ -119,6 +119,7 @@ INSERT INTO `tbl_pemesan` VALUES (6, 'Fakhrul', 'Sidareja', 'L', 'fakhrul-157900
 INSERT INTO `tbl_pemesan` VALUES (7, 'Fanani', 'Sidareja', 'L', 'fanani-1579275545.png', 1);
 INSERT INTO `tbl_pemesan` VALUES (8, 'Fanani', 'Sidareja', 'L', 'fanani-1579275545.png', 2);
 INSERT INTO `tbl_pemesan` VALUES (10, 'wan', 'wawawwawaaw', 'P', NULL, 1);
+INSERT INTO `tbl_pemesan` VALUES (11, 'iwan kadapol', 'jao x', 'L', NULL, 1);
 
 -- ----------------------------
 -- Table structure for tbl_perjalanan
@@ -131,14 +132,15 @@ CREATE TABLE `tbl_perjalanan`  (
   `jarak` int NULL DEFAULT NULL,
   `id_perusahaanref` int NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of tbl_perjalanan
 -- ----------------------------
 INSERT INTO `tbl_perjalanan` VALUES (1, 'pending', 'Jogjakarta', 300, 1);
 INSERT INTO `tbl_perjalanan` VALUES (2, 'proses', 'Ciamis', 70, 1);
-INSERT INTO `tbl_perjalanan` VALUES (3, 'done', 'aceh', 800, 1);
+INSERT INTO `tbl_perjalanan` VALUES (3, 'kirim invoice', NULL, NULL, 1);
+INSERT INTO `tbl_perjalanan` VALUES (4, 'done', 'aceh', 800, 1);
 
 -- ----------------------------
 -- Table structure for tbl_pesanan
@@ -172,7 +174,7 @@ INSERT INTO `tbl_pesanan` VALUES (1, 1000000, '2020-01-01', '2020-01-04', 8, 13,
 INSERT INTO `tbl_pesanan` VALUES (6, 2000000, '2020-01-17', '2020-01-20', 6, 14, 1, 3, 1);
 INSERT INTO `tbl_pesanan` VALUES (8, 1500000, '2020-01-18', '2020-01-21', 7, 15, 2, 3, 1);
 INSERT INTO `tbl_pesanan` VALUES (10, 700000, '2023-10-15', '2023-10-17', 10, 15, 1, 3, 1);
-INSERT INTO `tbl_pesanan` VALUES (11, 250000, '2023-10-16', '2023-10-17', 7, 14, 3, 3, 1);
+INSERT INTO `tbl_pesanan` VALUES (11, 250000, '2023-10-16', '2023-10-17', 7, 14, 4, 3, 1);
 
 -- ----------------------------
 -- Table structure for tbl_pesanan2
@@ -185,18 +187,19 @@ CREATE TABLE `tbl_pesanan2`  (
   `tgl_pinjam` date NULL DEFAULT NULL,
   `tgl_kembali` date NULL DEFAULT NULL,
   `id_pemesan` varchar(250) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
-  `id_mobil` varchar(250) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  `id_mobil` text CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL,
   `id_perjalanan` int NULL DEFAULT NULL,
   `id_jenis_bayar` int NULL DEFAULT NULL,
   `id_perusahaanref` int NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of tbl_pesanan2
 -- ----------------------------
-INSERT INTO `tbl_pesanan2` VALUES (4, 'BOK23102601', 400000, '2023-10-26', '2023-10-27', 'wan', 'xpander', 2, 4, 1);
-INSERT INTO `tbl_pesanan2` VALUES (10, 'BOK2310262OCP', 300000, '2023-10-26', '2023-10-27', 'Fakhrul', 'xpander', 1, 3, 1);
+INSERT INTO `tbl_pesanan2` VALUES (1, 'DRM/01/31/10/2023', 1350000, '2023-10-31', '2023-11-01', 'Fakhrul', NULL, 1, 0, 1);
+INSERT INTO `tbl_pesanan2` VALUES (2, 'DRM/01/01/11/2023', 1040000, '2023-11-01', '2023-11-02', 'wan', NULL, 2, 3, 1);
+INSERT INTO `tbl_pesanan2` VALUES (3, 'DRM/02/01/11/2023', 935000, '2023-11-01', '2023-11-02', 'iwan kadapol', NULL, 1, 5, 1);
 
 -- ----------------------------
 -- Table structure for tperusahaan
@@ -213,13 +216,38 @@ CREATE TABLE `tperusahaan`  (
   `userupdate` int NULL DEFAULT NULL,
   `owner` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   `account` text CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL,
-  `city` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL
+  `city` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  `prefix` varchar(10) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL
 ) ENGINE = InnoDB CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of tperusahaan
 -- ----------------------------
-INSERT INTO `tperusahaan` VALUES (1, 'Dearma Rental Mobil Medan', 'Jl Pendidikan/Sehati No.8 ', '08116220057,081262520057,08185', 'email@email.com', '1-1698448694.png', '2023-10-29 05:53:45', 4, 'Richard F Sinaga ', 'BCA : 8280 315 444 A/N : Richard Fernando Sinaga <br>\r\nMANDIRI : 9000033656522 A/N : Richard Fernando Sinaga ', 'Medan');
+INSERT INTO `tperusahaan` VALUES (1, 'Dearma Rental Mobil Medan', 'Jl Pendidikan/Sehati No.8 ', '08116220057,081262520057,08185', 'email@email.com', '1-1698448694.png', '2023-10-31 16:07:09', 4, 'Richard F Sinaga ', 'BCA : 8280 315 444 A/N : Richard Fernando Sinaga <br>\r\nMANDIRI : 9000033656522 A/N : Richard Fernando Sinaga ', 'Medan', 'DRM');
+
+-- ----------------------------
+-- Table structure for tpesanan_detail
+-- ----------------------------
+DROP TABLE IF EXISTS `tpesanan_detail`;
+CREATE TABLE `tpesanan_detail`  (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `pesanan_id` bigint NULL DEFAULT NULL,
+  `deskripsi` text CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL,
+  `qty` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  `price` int NULL DEFAULT NULL,
+  `booking_code_ref` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of tpesanan_detail
+-- ----------------------------
+INSERT INTO `tpesanan_detail` VALUES (7, 2, 'deskripsi 1', '1', 1000000, NULL);
+INSERT INTO `tpesanan_detail` VALUES (8, 2, 'deskripsi 2', '1', 40000, NULL);
+INSERT INTO `tpesanan_detail` VALUES (9, 1, 'deskripsi', '1', 1000000, NULL);
+INSERT INTO `tpesanan_detail` VALUES (10, 1, 'deskripsi 2', '1', 350000, NULL);
+INSERT INTO `tpesanan_detail` VALUES (11, 3, 'deskrip 1', '1', 900000, NULL);
+INSERT INTO `tpesanan_detail` VALUES (12, 3, 'deskripsi 2', '1', 35000, NULL);
 
 -- ----------------------------
 -- Table structure for ttuk
@@ -258,7 +286,7 @@ CREATE TABLE `tuangkeluar`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `fkttuk`(`typeuk`) USING BTREE,
   CONSTRAINT `fkttuk` FOREIGN KEY (`typeuk`) REFERENCES `ttuk` (`idtuk`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of tuangkeluar
@@ -267,6 +295,7 @@ INSERT INTO `tuangkeluar` VALUES (3, 1, 'serice rem mobil a', 250000, '2023-10-1
 INSERT INTO `tuangkeluar` VALUES (4, 3, 'ada aaja', 51000, '2023-10-18', 4, 1, '2023-10-16 09:12:43', 4, '2023-10-16 19:12:33', NULL, NULL);
 INSERT INTO `tuangkeluar` VALUES (5, 3, 'uang tempel ban', 1000, '2023-10-17', 4, 1, '2023-10-16 19:03:49', 4, '2023-10-16 19:05:18', NULL, NULL);
 INSERT INTO `tuangkeluar` VALUES (6, 1, 'batang', 30000, '2023-10-26', 4, 1, '2023-10-26 10:08:51', NULL, NULL, 'BOK2310262OCP', 10);
+INSERT INTO `tuangkeluar` VALUES (7, 1, 'asem', 100000, '2023-11-02', 4, 1, '2023-11-02 09:15:54', NULL, NULL, 'DRM/02/01/11/2023', 3);
 
 -- ----------------------------
 -- View structure for vrekap
