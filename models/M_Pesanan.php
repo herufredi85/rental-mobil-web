@@ -12,6 +12,12 @@ class M_Pesanan extends Model{
 		return $query;
 	}
 
+	public function tambahfile($data){
+		$query = $this->insert('tpemesanan_file', $data);
+		$query = $this->execute();
+		return $query;
+	}
+
 	public function lihat(){
 		$query = $this->setQuery("SELECT tbl_pesanan2.*
 		FROM tbl_pesanan2 
@@ -24,7 +30,7 @@ class M_Pesanan extends Model{
 	public function lihattgl($tglstart,$tglend){
 		$tglstart=date('Y-m-d',strtotime($tglstart));
 		$tglend=date('Y-m-d',strtotime($tglend));
-		$sq="SELECT booking_code,tbl_perjalanan.asal as sts,tbl_pesanan2.id, tbl_pesanan2.id_pemesan AS nama_pemesan, tbl_pesanan2.id_mobil AS nama_mobil, tbl_jenis_bayar.jenis_bayar,harga,tgl_pinjam,tgl_kembali,DATEDIFF(tgl_kembali,now()) as ddif  
+		$sq="SELECT no_invoice,booking_code,tbl_perjalanan.asal as sts,tbl_pesanan2.id, tbl_pesanan2.id_pemesan AS nama_pemesan, tbl_pesanan2.id_mobil AS nama_mobil, tbl_jenis_bayar.jenis_bayar,harga,tgl_pinjam,tgl_kembali,DATEDIFF(tgl_kembali,now()) as ddif  
 		FROM tbl_pesanan2 
 		left JOIN tbl_jenis_bayar ON tbl_pesanan2.id_jenis_bayar = tbl_jenis_bayar.id
 		left JOIN tbl_perjalanan ON tbl_pesanan2.id_perjalanan = tbl_perjalanan.id  
@@ -59,6 +65,32 @@ class M_Pesanan extends Model{
 		//return
 		return $prefix."/".$squence."/".$ymd;
 	}
+
+	public function generate_cbcb(){
+		$datenow = date("Y-m-d");
+		$sq="SELECT COUNT(*) as kon  FROM tbl_pesanan2 WHERE tgl_pinjam = '$datenow' and id_perusahaanref=".$_SESSION['login']['id_perusahaanref'];
+		//echo $sq;
+		$query = $this->setQuery($sq);
+		$query = $this->execute();
+		$kon=0;
+		while($data = $query->fetch_object()) :
+			$kon=$data->kon;
+		endwhile;
+		$len=strlen($kon);
+		$code = 'BOK';
+		$ymd = date('d/m/Y');
+		$squence = $kon+1;
+		$squence = str_pad($squence,$len+1,0,STR_PAD_LEFT);
+		$sq2="SELECT prefix  FROM tperusahaan WHERE id_perusahaan=".$_SESSION['login']['id_perusahaanref'];
+		$query = $this->setQuery($sq2);
+		$query = $this->execute();
+		while($data2 = $query->fetch_object()) :
+			$prefix=$data2->prefix;
+		endwhile;
+		//return
+		return $code.$squence.$this->generateRandomString(6);
+	}
+
 	function generateRandomString($length = 10) {
 		$characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 		$charactersLength = strlen($characters);
@@ -70,6 +102,18 @@ class M_Pesanan extends Model{
 	}
 	public function lihat_id($id){
 		$query = $this->get_where('tbl_pesanan2', ['id' => $id]);
+		$query = $this->execute();
+		return $query;
+	}
+
+	public function listfile($id){
+		$query = $this->get_where('tpemesanan_file', ['pemesanan_id' => $id]);
+		$query = $this->execute();
+		return $query;
+	}
+
+	public function listfileid($id){
+		$query = $this->get_where('tpemesanan_file', ['id' => $id]);
 		$query = $this->execute();
 		return $query;
 	}
@@ -100,6 +144,11 @@ class M_Pesanan extends Model{
 
 	public function hapusdetail($id){
 		$query = $this->delete('tpesanan_detail', ['pesanan_id' => $id]);
+		$query = $this->execute();
+		return $query;
+	}
+	public function hapusfile($id){
+		$query = $this->delete('tpemesanan_file', ['id' => $id]);
 		$query = $this->execute();
 		return $query;
 	}

@@ -77,6 +77,12 @@
     <div class="sidebar-heading">
         Laporan
     </div>
+    <li class="nav-item <?= $data == 'detailtransaksi' ? 'active' : '' ?>">
+        <a class="nav-link" href="<?= base_url('detailtransaksi/indextgl/01'.date('-m-Y').'/'.date('d-m-Y')) ?>">
+            <i class="fas fa-fw fa-receipt"></i>
+            <span>Detail Transaksi</span>
+        </a>
+    </li>
     <li class="nav-item <?= $data == 'rekap' ? 'active' : '' ?>">
         <a class="nav-link" href="<?= base_url('rekap/indextgl/01'.date('-m-Y').'/'.date('d-m-Y')) ?>">
             <i class="fas fa-fw fa-receipt"></i>

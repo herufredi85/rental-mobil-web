@@ -92,6 +92,7 @@
 											<thead>
 												<tr>
 													<th>No</th>
+													<th>No.Invoice</th>
 													<th>Kode Booking</th>
 													<th>Pemesan</th>
 													<th>Deskripsi</th>
@@ -105,6 +106,7 @@
 											<tfoot>
 												<tr>
 													<th>No</th>
+													<th>No.Invoice</th>
 													<th>Kode Booking</th>
 													<th>Pemesan</th>
 													<th>Deskripsi</th>
@@ -124,6 +126,7 @@
 												?>
 													<tr>
 														<td><?= $no++ ?></td>
+														<td><?= $pesanan->no_invoice ?></td>
 														<td><?= $pesanan->booking_code ?></td>
 														<td><?= $pesanan->nama_pemesan ?></td>
 														<td><a href="#"  onclick="openmodal(<?= $pesanan->id?>,'<?= $pesanan->booking_code ?>')">
@@ -147,6 +150,8 @@
 																	<p><a href="<?= base_url('pesanan/detail/' . $pesanan->id . '/' . $tglstart . '/' . $tglend) ?>" class="btn btn-sm btn-warning mb-2"><i class="fa fa-eye"></i> Detail</a></p>
 																	<p><a href="<?= base_url('pesanan/hapus/' . $pesanan->id . '/' . $tglstart . '/' . $tglend) ?>" class="btn btn-sm btn-danger mb-2" onclick="return confirm('apakah anda yakin?')"><i class="fa fa-trash"></i> Hapus</a></p>
 																	<p><a href="<?= base_url('pesanan/invoice/' . $pesanan->id) ?>" target="_blank" class="btn btn-sm btn-primary mb-2"><i class="fa fa-info"></i> Invoice</a></p>
+																	<p><a href="#" onclick="copytext(<?=$pesanan->id?>,'<?=$pesanan->booking_code?>')" class="btn btn-sm btn-success mb-2"><i class="fa fa-envelope"></i> Copy WA</a></p>
+																	<p><a href="#" onclick="upload(<?=$pesanan->id?>,'<?=$pesanan->booking_code?>')" class="btn btn-sm btn-secondary mb-2"><i class="fa fa-file"></i> Upload File</a></p>
 																</div>
 															</div>
 
@@ -219,6 +224,31 @@
 		$('#title').html(title);
 		$('#contentmodal').load('<?=BASE_URL.'pesanan/detailid/'?>'+id);
 	}
+	function copytext(id,title) {
+		$('#modallg').modal('show');
+		$('#title').html("Copy WA "+title);
+		$('#contentmodal').load('<?=BASE_URL.'pesanan/copytext/'?>'+id);
+	}
+	function upload(id,title) {
+		$('#modallg').modal('show');
+		$('#title').html("Upload File "+title);
+		$('#contentmodal').load('<?=BASE_URL.'pesanan/upload/'?>'+id);
+	}
+	function myFunction(id) {
+  // Get the text field
+  var copyText = document.getElementById("myInput"+id);
+
+  // Select the text field
+  copyText.select();
+  copyText.setSelectionRange(0, 99999); // For mobile devices
+
+   // Copy the text inside the text field
+  navigator.clipboard.writeText(copyText.value);
+
+  // Alert the copied text
+  alert("Copied the text: ");
+
+}
 	function xls() {
 			var tglstart = $('#tglstart').val();
 			var tglend = $('#tglend').val();

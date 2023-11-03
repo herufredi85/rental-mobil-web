@@ -50,24 +50,27 @@
 								</div>
 								<div class="card-body">
 									<form method="POST" action="<?= base_url('pesanan/proses_ubah/' . $pesanan->id . '/' . $tglstart . '/' . $tglend) ?>" enctype="multipart/form-data">
+									<div class="form-group">
+											<label for="id_pemesan">No. Invoice</label>
+											<input type="text"  class="form-control" name="no_invoice" value="<?= $pesanan->no_invoice ?>">
+										</div>
 										<div class="form-group">
 											<label for="id_pemesan">Kode Booking</label>
-											<input type="text" disabled="disabled" class="form-control" value="<?= $pesanan->booking_code ?>">
+											<input type="text"  class="form-control" name="booking_code" value="<?= $pesanan->booking_code ?>">
 										</div>
-										<!-- <div class="form-group">
-											<label for="id_pemesan">Nama Pemesan</label>
-											<input type="text" disabled="disabled" class="form-control" value="<?= $pesanan->id_pemesan ?>">
-										</div> -->
+										
 										<div class="form-group">
-								  		<label for="id_pemesan">Nama Pemesan</label>
-										<!-- <input type="text"  name="id_pemesan" id="id_pemesan" class="form-control"> -->
-								  		<select name="id_pemesan" id="id_pemesan" class="form-control">
-										  <option value="">-PILIH-</option>
-								  			<?php while($pemesan = $data_pemesan->fetch_object()) : ?>
-												<option value="<?= $pemesan->id ?>|<?= $pemesan->nama ?>" <?php if ($pemesan->nama==$pesanan->id_pemesan) { echo "selected";}?>  ><?= $pemesan->nama ?></option>
-								  			<?php endwhile; ?>
-								  		</select>
-								  	</div>
+											<label for="id_pemesan">Nama Pemesan</label>
+											<!-- <input type="text"  name="id_pemesan" id="id_pemesan" class="form-control"> -->
+											<select name="id_pemesan" id="id_pemesan" class="form-control">
+												<option value="">-PILIH-</option>
+												<?php while ($pemesan = $data_pemesan->fetch_object()) : ?>
+													<option value="<?= $pemesan->id ?>|<?= $pemesan->nama ?>" <?php if ($pemesan->nama == $pesanan->id_pemesan) {
+																													echo "selected";
+																												} ?>><?= $pemesan->nama ?></option>
+												<?php endwhile; ?>
+											</select>
+										</div>
 
 										<!-- <div class="form-group">
 								  		<label for="id_mobil">Mobil</label>
@@ -76,42 +79,55 @@
 										<div class="form-group">
 											<label for="id_mobil">Deskripsi Pesanan</label>
 											<div id="append">
-											<!-- <input type="text"  name="id_mobil" id="id_mobil" class="form-control"> -->
-											<?php
-											$no = 1;
-											while ($pid = $detailid->fetch_object()) :
+												<!-- <input type="text"  name="id_mobil" id="id_mobil" class="form-control"> -->
+												<?php
+												$t=0;
+												$no = 1;
+												while ($pid = $detailid->fetch_object()) :
+													$t=$t+$pid->price*$pid->qty;
+												?>
 
-											?>
-											
-												<br>
-												<div class="row">
-													<div class="col-md-4">
-														<textarea class="form-control" placeholder="deskripsi" name="deskripsi[]"><?= $pid->deskripsi ?></textarea>
-													</div>
-													<div class="col-md-1">
-														<input type="text" class="form-control" placeholder="qty" name="qty[]" value="<?= $pid->qty ?>">
-													</div>
-													<div class="col-md-2">
-														<input type="text" value="<?= number_format($pid->price, 0, ',', '.') ?>" class="form-control inputField" placeholder="harga" name="price[]" onkeyup="FormatCurrency(this)" style="text-align: right;">
-													</div>
-													<?php if ($no == 1) { ?>
-														<div class="col-md-1">
-															<button type="button" class="btn btn-primary add-field">+</button>
+													<br>
+													<div class="row">
+														<div class="col-md-4">
+															<textarea class="form-control" placeholder="deskripsi" name="deskripsi[]"><?= $pid->deskripsi ?></textarea>
 														</div>
-													<?php } else {
-													?>
 														<div class="col-md-1">
-														<button type="button" class="btn btn-secondary remove-field">-</button>
+															<input type="text" class="form-control qty" placeholder="qty" name="qty[]" value="<?= $pid->qty ?>">
 														</div>
-													<?php
-													}
-													?>
-												</div>
-												
-											<?php
-												$no++;
-											endwhile; ?>
-										</div>
+														<div class="col-md-2">
+															<input type="text" class="form-control price" placeholder="harga" value="<?= $pid->price ?>" name="price1[]" oninput="calculateSubtotal(this)" style="text-align: right;">
+														</div>
+														<div class="col-md-2">
+															<input type="text" value="<?= number_format($pid->price*$pid->qty , 0, ',', '.') ?>" class="form-control inputField" placeholder="harga" name="price[]" onkeyup="FormatCurrency(this)" style="text-align: right;">
+														</div>
+														<?php if ($no == 1) { ?>
+															<div class="col-md-1">
+																<button type="button" class="btn btn-primary add-field">+</button>
+															</div>
+														<?php } else {
+														?>
+															<div class="col-md-1">
+																<button type="button" class="btn btn-secondary remove-field">-</button>
+															</div>
+														<?php
+														}
+														?>
+													</div>
+
+												<?php
+													$no++;
+												endwhile; ?>
+											</div>
+											<div class="row">
+                    <div class="col-md-4"></div>
+                    <div class="col-md-1"></div>
+                    <div class="col-md-2"></div>
+                    <div class="col-md-2">
+                        <input type="text" class="form-control totalharga" name="totalharga" value="<?= number_format($t , 0, ',', '.') ?>" placeholder="Total Harga" style="text-align: right;" readonly>
+                    </div>
+                    <div class="col-md-1"></div>
+                </div>
 										</div>
 
 										<!-- <div class="form-group">
@@ -120,24 +136,26 @@
 								  	</div> -->
 
 										<div class="row">
-										<div class="col-md-6">
-								  			<div class="form-group">
-										  		<label for="id_jenis_bayar">Jenis Layanan</label>
-										  		<select name="id_jenis_bayar" id="id_jenis_bayar" class="form-control">
-												  <option value="">-PILIH-</option>
-										  			<?php while($jenis_bayar = $data_jenis_bayar->fetch_object()) : ?>
-														<option value="<?= $jenis_bayar->id ?>" <?php if($jenis_bayar->id==$pesanan->id_jenis_bayar){ echo "selected"; }?> ><?= $jenis_bayar->jenis_bayar ?></option>
-										  			<?php endwhile; ?>
-										  		</select>
-										  	</div>
-								  		</div>
 											<div class="col-md-6">
+												<div class="form-group">
+													<label for="id_jenis_bayar">Jenis Layanan</label>
+													<select name="id_jenis_bayar" id="id_jenis_bayar" class="form-control">
+														<option value="">-PILIH-</option>
+														<?php while ($jenis_bayar = $data_jenis_bayar->fetch_object()) : ?>
+															<option value="<?= $jenis_bayar->id ?>" <?php if ($jenis_bayar->id == $pesanan->id_jenis_bayar) {
+																										echo "selected";
+																									} ?>><?= $jenis_bayar->jenis_bayar ?></option>
+														<?php endwhile; ?>
+													</select>
+												</div>
+											</div>
+											<!-- <div class="col-md-6">
 												<div class="form-group">
 													<label for="harga">Harga</label>
 													<input type="text" maxlength="15" disabled onkeyup="FormatCurrency(this)" style="text-align: right;" name="harga2" id="harga2" value="<?= number_format($pesanan->harga, 0, ',', '.') ?>" placeholder="ketik" required="required" autocomplete="off" class="form-control">
-													<input type="hidden" maxlength="15"  onkeyup="FormatCurrency(this)" style="text-align: right;"  name="harga" id="harga" value="<?= number_format($pesanan->harga, 0, ',', '.') ?>" placeholder="ketik" required="required" autocomplete="off" class="form-control">
+													<input type="hidden" maxlength="15" onkeyup="FormatCurrency(this)" style="text-align: right;" name="harga" id="harga" value="<?= number_format($pesanan->harga, 0, ',', '.') ?>" placeholder="ketik" required="required" autocomplete="off" class="form-control">
 												</div>
-											</div>
+											</div> -->
 										</div>
 
 										<div class="row">
@@ -191,7 +209,7 @@
 		<i class="fas fa-angle-up"></i>
 	</a>
 
-	
+
 	<script src="<?= base_url('sb-admin-2/') ?>/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 	<script src="<?= base_url('sb-admin-2/') ?>/vendor/jquery-easing/jquery.easing.min.js"></script>
 	<script src="<?= base_url('sb-admin-2/') ?>/js/sb-admin-2.min.js"></script>
@@ -209,10 +227,13 @@
                 content=content+'<textarea class="form-control" placeholder="deskripsi" name="deskripsi[]"></textarea>';
                 content=content+'</div>';
                 content=content+'<div class="col-md-1">';
-                content=content+'<input type="text" class="form-control" placeholder="qty" name="qty[]">';
+                content=content+'<input type="text" class="form-control qty" placeholder="qty" name="qty[]">';
                 content=content+'</div>';
+				content=content+'<div class="col-md-2">';
+				content=content+'<input type="text" class="form-control price" placeholder="harga" name="price1[]" oninput="calculateSubtotal(this)" style="text-align: right;">';
+				content=content+'</div>';
                 content=content+'<div class="col-md-2">';
-                content=content+'<input type="text" class="form-control inputField" placeholder="harga" name="price[]" onkeyup="FormatCurrency(this)"  style="text-align: right;"  > ';
+                content=content+'<input type="text" class="form-control inputField" placeholder="harga" name="price[]" oninput="calculateSubtotal(this)" style="text-align: right;"  > ';
                 content=content+'</div>';
                 content=content+'<div class="col-md-1">';
                 content=content+'<button type="button" class="btn btn-secondary remove-field">-</button>';
@@ -223,17 +244,50 @@
 
             $('#append').on('click', '.remove-field', function() {
             $(this).closest('.row').remove();
+			calculateTotalHarga();
         });
 
       
         });
 
-        $(document).on('input', '.inputField', function() {
-            //alert('ss');
-                calculateTotal();
-            });
+        // $(document).on('input', '.inputField', function() {
+        //     //alert('ss');
+        //         calculateTotal();
+        //     });
+	
+		document.addEventListener("input", function (e) {
+            if (e.target.classList.contains("qty") || e.target.classList.contains("price")) {
+                calculateSubtotal(e.target);
+                calculateTotalHarga();
+            }
+        });
 
+        function calculateSubtotal(input) {
+            var row = input.closest('.row');
+            var qty = parseFloat(row.querySelector('.qty').value) || 0;
+            var price = parseFloat(row.querySelector('.price').value.replace(/[^0-9.]+/g, '')) || 0;
+            var subtotal = qty * price;
+            row.querySelector('[name="price[]"]').value = formatCurrency(subtotal);
+        }
+
+		function calculateTotalHarga() {
+    var totalharga = 0;
+    document.querySelectorAll('[name="price1[]"]').forEach(function (inputPrice, index) {
+        var qty = parseFloat(document.querySelectorAll('[name="qty[]"]')[index].value) || 0;
+        var price = parseFloat(inputPrice.value.replace(/[^0-9]+/g, '')) || 0;
+        totalharga += qty * price;
+    });
+    document.querySelector('.totalharga').value = formatCurrency(totalharga);
+}
+
+        function formatCurrency(amount) {
+           // return amount.toFixed(0).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+			return new Intl.NumberFormat('id-ID').format(amount);
+        }
+		
         function calculateTotal() {
+
+			
             var total = 0;
                 $('.inputField').each(function() {
                     var value = $(this).val().replace(/\./g, ''); // Menghapus titik

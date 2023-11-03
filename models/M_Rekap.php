@@ -28,6 +28,21 @@ class M_Rekap extends Model{
 		return $query;
 	}
 
+	public function lihattgldetail($tglstart,$tglend){
+		$tglstart=date('Y-m-d',strtotime($tglstart));
+		$tglend=date('Y-m-d',strtotime($tglend));
+		$q="select tbl_pesanan2.booking_code,harga,tgl_pinjam,tbl_pesanan2.id,
+		(select sum(rpuk)  from tuangkeluar where tuangkeluar.booking_code=tbl_pesanan2.booking_code
+		) uangkeluar
+		from tbl_pesanan2
+			where tbl_pesanan2.id_perusahaanref=".$_SESSION['login']['id_perusahaanref']." and tbl_pesanan2.tgl_pinjam>='".$tglstart."' and tbl_pesanan2.tgl_pinjam<='".$tglend."'
+		";
+		//echo $q;
+		$query = $this->setQuery($q);
+		$query = $this->execute();
+		return $query;
+	}
+
 
     public function gettuk(){
 		$query = $this->get('ttuk');

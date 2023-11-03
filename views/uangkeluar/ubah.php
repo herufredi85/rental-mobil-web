@@ -48,6 +48,15 @@
 							</div>
 							<div class="card-body">
 								<form method="POST" action="<?= base_url('uangkeluar/proses_ubah/'.$duk->id.'/'.$tglstart.'/'.$tglend) ?>">
+								<div class="form-group">
+										<label for="asal">Kode Booking</label>
+										<select name="kode_booking" id="kode_booking" class="form-control" required="required">
+                                            <option value="">-PILIH-</option>
+								  			<?php while($pesanan = $data_pesanan->fetch_object()) : ?>
+												<option value="<?= $pesanan->id ?>|<?= $pesanan->booking_code ?>" <?php if ($pesanan->booking_code==$duk->booking_code) { echo "selected";} ?> ><?= $pesanan->booking_code ?></option>
+								  			<?php endwhile; ?>
+								  		</select>
+								  	</div>
 								  	<div class="form-group">
 										<label for="asal">Jenis Uang Keluar</label>
 										<select name="typeuk" id="typeuk" class="form-control" required="required">

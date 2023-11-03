@@ -61,7 +61,7 @@
 										</div>
 										<div class="form-group">
 											<button type="submit" class="btn btn-sm btn-info" name="tampil"><i class="fa fa-info"></i> Tampil</button>
-											<a href="#" target="_blank" onclick="xls()" class="btn btn-sm btn-danger"><i class="fa fa-times"></i> Excel</a>
+											<a href="#" target="_blank" onclick="xls()" class="btn btn-sm btn-success"><i class="fa fa-times"></i> Excel</a>
 
 										</div>
 									</form>

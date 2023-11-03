@@ -37,7 +37,8 @@ class C_Pesanan extends Controller {
 
 	public function indextgl($tglstart,$tglend){
 		$data = [
-			'cb'=> $this->pesanan->generate_cb(),
+			
+			
 			'tglstart' => $tglstart,
 			'tglend' => $tglend,
 			'aktif' => 'pesanan',
@@ -55,6 +56,7 @@ class C_Pesanan extends Controller {
 	public function add($tglstart,$tglend){
 		$data = [
 			'cb'=> $this->pesanan->generate_cb(),
+			'cbcb'=> $this->pesanan->generate_cbcb(),
 			'aktif' => 'pesanan',
 			'tglstart' => $tglstart,
 			'tglend' => $tglend,
@@ -111,7 +113,7 @@ class C_Pesanan extends Controller {
 		//exit();
 	
 		if(!isset($_POST['tambah'])) redirect('pesanan/indextgl/'.$tglstart."/".$tglend);
-		$harga=str_replace('.', '', $this->req->post('harga'));
+		$harga=str_replace('.', '', $this->req->post('totalharga'));
 		$tgl_pinjam=date('Y-m-d',strtotime($this->req->post('tgl_pinjam')));
 		$tgl_kembali=date('Y-m-d',strtotime($this->req->post('tgl_kembali')));
 		$pemesan=explode("|",$this->req->post('id_pemesan'));
@@ -121,7 +123,7 @@ class C_Pesanan extends Controller {
 		$data = [
 			'booking_code'=> $this->req->post('kode_booking'),
 			'id_pemesan' => $pemesan[1],
-			//'id_mobil' => $this->req->post('id_mobil'),
+			'no_invoice' => $this->req->post('no_invoice'),
 			'id_perjalanan' => $this->req->post('id_perjalanan'),
 			'id_jenis_bayar' => $this->req->post('id_jenis_bayar'),
 			'harga' => $harga,
@@ -155,6 +157,23 @@ class C_Pesanan extends Controller {
 	
 	}
 
+	public function upload($id){
+		$data = [
+			'id'=>$id,
+			'listfile' => $this->pesanan->listfile($id),
+		];
+
+		$this->view('pesanan/upload', $data);
+	}
+	public function copytext($id){
+		$data = [
+			'detailid' => $this->pesanan->cek($id),
+			'det' => $this->pesanan->detailid($id),
+		];
+
+		$this->view('pesanan/copytext', $data);
+	}
+
 	public function ubah($id,$tglstart,$tglend){
 		if(!isset($id) || $this->pesanan->cek($id)->num_rows == 0) redirect('pesanan/indextgl/'.$tglstart."/".$tglend);
 		$pesanan = $this->pesanan->lihat_id($id)->fetch_object();
@@ -183,7 +202,7 @@ class C_Pesanan extends Controller {
 
 	public function proses_ubah($id,$tglstart,$tglend){
 		if(!isset($id) || $this->pesanan->cek($id)->num_rows == 0 || !isset($_POST['ubah'])) redirect('pesanan/indextgl/'.$tglstart."/".$tglend);
-		$harga=str_replace('.', '', $this->req->post('harga'));
+		$harga=str_replace('.', '', $this->req->post('totalharga'));
 		$tgl_kembali=date('Y-m-d',strtotime($this->req->post('tgl_kembali')));
 		$pemesan=explode("|",$this->req->post('id_pemesan'));
 		$data = [
@@ -191,6 +210,8 @@ class C_Pesanan extends Controller {
 			'id_jenis_bayar'=> $this->req->post('id_jenis_bayar'),
 			'id_perjalanan' => $this->req->post('id_perjalanan'),
 			'harga' => $harga,
+			'no_invoice' => $this->req->post('no_invoice'),
+			'booking_code' => $this->req->post('booking_code'),
 			'tgl_kembali' => $tgl_kembali,
 		];
 		$this->pesanan->hapusdetail($id);
@@ -211,6 +232,24 @@ class C_Pesanan extends Controller {
 			redirect('pesanan/indextgl/'.$tglstart."/".$tglend);
 		} else {
 			setSession('error', 'Data gagal diubah!');
+			redirect('pesanan/indextgl/'.$tglstart."/".$tglend);
+		}
+	}
+
+	public function hapusfile($id = null,$tglstart,$tglend){
+		if(!isset($id) || $this->pesanan->cek($id)->num_rows == 0) redirect('pesanan/indextgl/'.$tglstart."/".$tglend);
+
+		$gambar	= $this->pesanan->listfileid($id)->fetch_object()->namafile;
+
+		if($gambar!=""){
+			unlink(BASEPATH . DS . 'files' . DS . $gambar) or die('gagal hapus gambar!');
+		}
+		
+		if($this->pesanan->hapusfile($id)){
+			setSession('success', 'Data berhasil dihapus!');
+			redirect('pesanan/indextgl/'.$tglstart."/".$tglend);
+		} else {
+			setSession('error', 'Data gagal dihapus!');
 			redirect('pesanan/indextgl/'.$tglstart."/".$tglend);
 		}
 	}
@@ -251,6 +290,7 @@ class C_Pesanan extends Controller {
 	}
 
 
+
 	public function invoice($id){
 		if(!isset($id) || $this->pesanan->cek($id)->num_rows == 0) redirect('pesanan');
 
@@ -263,5 +303,43 @@ class C_Pesanan extends Controller {
 		];
 
 		$this->view('pesanan/invoice', $data);
+	}
+
+	public function uploadfile($id,$tglstart,$tglend){
+		//print_r($_POST);
+		//exit();
+
+		// proses upload
+		$upload_dir = BASEPATH . DS . 'files' . DS;
+		$asal = $_FILES['filelampiran'.$id]['tmp_name'];
+		$ekstensi = pathinfo($_FILES['filelampiran'.$id]['name'], PATHINFO_EXTENSION);
+		$error = $_FILES['filelampiran'.$id]['error'];
+
+
+		$img_name = $id;
+		$img_name = strtolower($img_name);
+		$img_name = str_replace(' ', '-', $img_name);
+		$img_name = $img_name . '-' . time();
+
+			if(file_exists($upload_dir . $img_name . '.' . $ekstensi)) unlink($upload_dir . $img_name . '.' . $ekstensi);
+			
+			if(move_uploaded_file($asal, $upload_dir . $img_name . '.' . $ekstensi)){
+				$data = [
+					'pemesanan_id' => $id,
+					'namafile' => $img_name . '.' . $ekstensi,
+					'datecreated'=>date('Y-m-d H:i:s'),
+				];
+
+			
+			} else die('gagal upload gambar');
+
+
+		if($this->pesanan->tambahfile($data)){
+			setSession('success', 'Data berhasil ditambahkan!');
+			redirect('pesanan/indextgl/'.$tglstart."/".$tglend);
+		} else {
+			setSession('error', 'Data gagal ditambahkan!');
+			redirect('pesanan/indextgl/'.$tglstart."/".$tglend);
+		}
 	}
 }

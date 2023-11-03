@@ -99,11 +99,12 @@ class C_Uangkeluar extends Controller {
 
 		$data = [
 			'aktif' => 'perjalanan',
-			'judul' => 'Ubah Perjalanan',
+			'judul' => 'Ubah Pengeluaran',
 			'data_ttuk'=>$this->perjalanan->gettuk(),
 			'duk' => $this->perjalanan->lihat_id($id)->fetch_object(),
 			'tglstart' => $tglstart,
 			'tglend' => $tglend,
+			'data_pesanan'=>$this->pesanan->lihat(),
 		];
 		$this->view('uangkeluar/ubah', $data);
 	}
@@ -112,7 +113,10 @@ class C_Uangkeluar extends Controller {
 		if(!isset($id) || $this->perjalanan->cek($id)->num_rows == 0 || !isset($_POST['ubah'])) redirect('uangkeluar/indextgl/'.$tglstart.'/'.$tglend);
 		$rpuk=str_replace('.', '', $this->req->post('rpuk'));
         $tgluk=date('Y-m-d',strtotime($this->req->post('tgluk')));
+		$cb=explode("|",$this->req->post('kode_booking'));
 		$data = [
+			'booking_code' => $cb['1'],
+			'pesanan_id' => $cb['0'],
 			'typeuk' => $this->req->post('typeuk'),
 			'ketuk' => $this->req->post('ketuk'),
 			'rpuk' => $rpuk,

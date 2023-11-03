@@ -11,7 +11,7 @@
     .invoice {
       width: 90%;
       margin: 0 auto;
-      padding: 10px;
+      padding: 5px;
       background-color: #fff;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     }
@@ -46,7 +46,7 @@
 
     .invoice-items th, .invoice-items td {
       border: 1px solid #ddd;
-      padding: 10px;
+      padding: 5px;
       text-align: left;
       height: 50%;
     }
@@ -95,7 +95,7 @@
         <tr>
           <td>No.Invoice</td>
           <td>:</td>
-          <td><?=$pesanan->booking_code?></td>
+          <td><?=$pesanan->no_invoice?></td>
         </tr>
         <tr>
           <td>Date</td>
@@ -128,6 +128,7 @@
         <tr >
 
           <th style="background-color: #76b5c5; text-align: center">No</th>
+          <th style="background-color: #76b5c5; text-align: center">Kode Booking</th>
           <th style="background-color: #76b5c5; text-align: center">Deskripsi</th>
           <th style="background-color: #76b5c5; text-align: center">Qty</th>
           <th style="background-color: #76b5c5; text-align: center">Unit Price</th>
@@ -137,19 +138,21 @@
       <tbody >
         <?php
         $no=1;
+        $tot=0;
         while ($pid = $pesananid->fetch_object()) :
+         // $tot=$tot+($pid->price*$pid->qty);
         ?>
         <tr >
           <td style="vertical-align: top;"><?=$no++?></td>
-          <td ><?=$pid->deskripsi?>
-          </td>
+          <td ><?=$pesanan->booking_code?></td>
+          <td width='50%'><?=$pid->deskripsi?></td>
           <td style="vertical-align: top;"><?=number_format($pid->qty,0,',','.')?></td>
-          <td style="text-align: right; vertical-align: top;"><?=number_format($pid->price,0,',','.')?></td>
+          <td style="text-align: right; vertical-align: top;"><?=number_format($pid->price/$pid->qty,0,',','.')?></td>
           <td style="text-align: right; vertical-align: top;"><?=number_format($pid->price,0,',','.')?></td>
         </tr>
         <?php endwhile;?>
       <tr>
-        <td colspan="4" style="text-align: center;"><B>TOTAL</b></td>
+        <td colspan="5" style="text-align: center;"><B>TOTAL</b></td>
         <td style="text-align: right;"><b><?=number_format($pesanan->harga,0,',','.')?></b></td>
       </tr>
       </tbody>

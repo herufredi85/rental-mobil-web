@@ -11,7 +11,7 @@
  Target Server Version : 100427
  File Encoding         : 65001
 
- Date: 02/11/2023 10:16:15
+ Date: 02/11/2023 15:35:13
 */
 
 SET NAMES utf8mb4;
@@ -200,6 +200,23 @@ CREATE TABLE `tbl_pesanan2`  (
 INSERT INTO `tbl_pesanan2` VALUES (1, 'DRM/01/31/10/2023', 1350000, '2023-10-31', '2023-11-01', 'Fakhrul', NULL, 1, 0, 1);
 INSERT INTO `tbl_pesanan2` VALUES (2, 'DRM/01/01/11/2023', 1040000, '2023-11-01', '2023-11-02', 'wan', NULL, 2, 3, 1);
 INSERT INTO `tbl_pesanan2` VALUES (3, 'DRM/02/01/11/2023', 935000, '2023-11-01', '2023-11-02', 'iwan kadapol', NULL, 1, 5, 1);
+
+-- ----------------------------
+-- Table structure for tpemesanan_file
+-- ----------------------------
+DROP TABLE IF EXISTS `tpemesanan_file`;
+CREATE TABLE `tpemesanan_file`  (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `pemesanan_id` bigint NULL DEFAULT NULL,
+  `namafile` text CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL,
+  `datecreated` datetime(0) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of tpemesanan_file
+-- ----------------------------
+INSERT INTO `tpemesanan_file` VALUES (1, 2, '2-1698912579.png', '2023-11-02 15:09:39');
 
 -- ----------------------------
 -- Table structure for tperusahaan
