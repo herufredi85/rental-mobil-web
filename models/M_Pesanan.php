@@ -30,7 +30,7 @@ class M_Pesanan extends Model{
 	public function lihattgl($tglstart,$tglend){
 		$tglstart=date('Y-m-d',strtotime($tglstart));
 		$tglend=date('Y-m-d',strtotime($tglend));
-		$sq="SELECT no_invoice,booking_code,tbl_perjalanan.asal as sts,tbl_pesanan2.id, tbl_pesanan2.id_pemesan AS nama_pemesan, tbl_pesanan2.id_mobil AS nama_mobil, tbl_jenis_bayar.jenis_bayar,harga,tgl_pinjam,tgl_kembali,DATEDIFF(tgl_kembali,now()) as ddif  
+		$sq="SELECT uang_muka,no_invoice,booking_code,tbl_perjalanan.asal as sts,tbl_pesanan2.id, tbl_pesanan2.id_pemesan AS nama_pemesan, tbl_pesanan2.id_mobil AS nama_mobil, tbl_jenis_bayar.jenis_bayar,harga,tgl_pinjam,tgl_kembali,DATEDIFF(tgl_kembali,now()) as ddif  
 		FROM tbl_pesanan2 
 		left JOIN tbl_jenis_bayar ON tbl_pesanan2.id_jenis_bayar = tbl_jenis_bayar.id
 		left JOIN tbl_perjalanan ON tbl_pesanan2.id_perjalanan = tbl_perjalanan.id  

@@ -57,6 +57,8 @@
 
 											Status <br>
 											Total Harga <br>
+											Uang Muka <br>
+											Sisa Pembayaran <br>
 											Jenis Layanan <br>
 											Deskripsi Pesanan <br>
 										</div>
@@ -78,6 +80,8 @@
 											<strong><?= date('d-m-Y', strtotime($pesanan->tgl_kembali)) ?></strong><br>
 											<strong><?= $pesanan->asal ?></strong><br>
 											<strong>Rp. <?= number_format($pesanan->harga, 0, ',', '.') ?></strong><br>
+											<strong>Rp. <?= number_format($pesanan->uang_muka, 0, ',', '.') ?></strong><br>
+											<strong>Rp. <?= number_format($pesanan->harga-$pesanan->uang_muka, 0, ',', '.') ?></strong><br>
 											<strong><?= $pesanan->jenis_bayar ?></strong><br>
 											<table class="table table-border" width="100%">
 												<thead>

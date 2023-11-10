@@ -54,7 +54,7 @@ class C_Pemesan extends Controller{
 		$ekstensi = pathinfo($_FILES['foto']['name'], PATHINFO_EXTENSION);
 		$error = $_FILES['foto']['error'];
 
-		$img_name = $this->req->post('nama');
+		//$img_name = $this->req->post('nama');
 		$img_name = $this->req->post('nama');
 		$img_name = strtolower($img_name);
 		$img_name = str_replace(' ', '-', $img_name);

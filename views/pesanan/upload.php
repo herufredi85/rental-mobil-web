@@ -5,7 +5,8 @@ $tglend=date('d-m-Y');
 <form  method="POST" name="formupload<?=$id?>" id="formupload<?=$id?>" action="<?= base_url('pesanan/uploadfile/'.$id."/".$tglstart.'/'.$tglend) ?>" enctype="multipart/form-data">
 <div class="row">
     <div class="col-sm-6">
-    <input type="file" class="form-control" id="filelampiran<?=$id?>" name="filelampiran<?=$id?>">
+    <input type="file" placeholder="file gambar" accept="image/png, image/gif, image/jpeg" class="form-control" id="filelampiran<?=$id?>" name="filelampiran<?=$id?>">
+	file gambar
     </div>
     <div class="col-sm-6">
     <input type="submit" class="btn btn-primary" value="Upload">

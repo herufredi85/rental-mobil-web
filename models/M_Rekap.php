@@ -36,6 +36,7 @@ class M_Rekap extends Model{
 		) uangkeluar
 		from tbl_pesanan2
 			where tbl_pesanan2.id_perusahaanref=".$_SESSION['login']['id_perusahaanref']." and tbl_pesanan2.tgl_pinjam>='".$tglstart."' and tbl_pesanan2.tgl_pinjam<='".$tglend."'
+			order by tbl_pesanan2.id desc
 		";
 		//echo $q;
 		$query = $this->setQuery($q);

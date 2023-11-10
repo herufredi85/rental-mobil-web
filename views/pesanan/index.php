@@ -35,6 +35,7 @@
 									<h1 class="h3 mb-4 text-gray-800"><?= $judul ?></h1>
 								</div>
 								<div class="float-right">
+								<a href="<?= BASE_URL.'pesanan/invoicekosong/'?>" target="_blank" class="btn btn-sm btn-secondary"><i class="fa fa-info"></i> Invoice Kosong</a>
 									<a href="<?= BASE_URL . "pesanan/add/" . $tglstart . "/" . $tglend ?>" class="btn btn-sm btn-primary"><i class="fa fa-plus"></i> Tambah Data</a>
 								</div>
 							</div>
@@ -99,6 +100,8 @@
 													<th>Jenis Layanan</th>
 													<th>Tgl Pinjam<br>Tgl Kembali</th>
 													<th>Harga</th>
+													<th>Uang Muka</th>
+													<th>Sisa <br>Pembayaran</th>
 													<th>Status</th>
 													<th>Aksi</th>
 												</tr>
@@ -113,6 +116,8 @@
 													<th>Jenis Layanan</th>
 													<th>Tgl Pinjam<br>Tgl Kembali</th>
 													<th>Harga</th>
+													<th>Uang Muka</th>
+													<th>Sisa <br>Pembayaran</th>
 													<th>Status</th>
 													<th>Aksi</th>
 												</tr>
@@ -138,7 +143,9 @@
 																		echo 'style="color:red"';
 																	} ?>><?= date('d-m-Y', strtotime($pesanan->tgl_kembali)) ?></label>
 														</td>
-														<td align="right"><?= number_format($pesanan->harga, 0, ',', '.') ?></td>
+														<td align="right"><b><?= number_format($pesanan->harga, 0, ',', '.') ?></b></td>
+														<td align="right"><?= number_format($pesanan->uang_muka, 0, ',', '.') ?></td>
+														<td align="right"><?= number_format($pesanan->harga-$pesanan->uang_muka, 0, ',', '.') ?></td>
 														<td><?= $pesanan->sts ?></td>
 														<td>
 															<div class="dropdown">

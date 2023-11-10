@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta charset="UTF-8">
   <title>Invoice</title>
@@ -44,7 +45,8 @@
       width: 100%;
     }
 
-    .invoice-items th, .invoice-items td {
+    .invoice-items th,
+    .invoice-items td {
       border: 1px solid #ddd;
       padding: 5px;
       text-align: left;
@@ -58,6 +60,7 @@
     .invoice-items tr:nth-child(even) {
       background-color: #f2f2f2;
     }
+
     .invoice-total {
       margin-top: 20px;
       text-align: right;
@@ -69,119 +72,143 @@
     }
   </style>
 </head>
+
 <body>
   <div class="invoice">
     <div class="invoice-header">
       <h1>Invoice </h1>
     </div>
-<table width='100%'>
-  <tr>
-    <td width='70%'> 
-      <table>
-        <tr>
-          <td><?=$perusahaan->nama_perusahaan?></td>
-        </tr>
-        <tr>
+    <table width='100%'>
+      <tr>
+        <td width='70%'>
+          <table>
+            <tr>
+              <td><?= $perusahaan->nama_perusahaan ?></td>
+            </tr>
+            <tr>
 
-          <td><?=$perusahaan->alamat?></td>
-        </tr>
+              <td><?= $perusahaan->alamat ?></td>
+            </tr>
+            <tr>
+              <td><?= $perusahaan->telp ?></td>
+            </tr>
+          </table>
+        </td>
+        <td>
+          <table>
+            <tr>
+              <td>No.Invoice</td>
+              <td>:</td>
+              <td><?= $pesanan->no_invoice ?></td>
+            </tr>
+            <tr>
+              <td>Date</td>
+              <td>:</td>
+              <td><?= date('d M Y', strtotime($pesanan->tgl_pinjam)) ?></td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td align="center">
+
+          <table>
+            <tr>
+              <td>Customer</td>
+              <td>:</td>
+              <td>
+                <h3><?= $pesanan->id_pemesan ?></h3>
+              </td>
+            </tr>
+
+          </table>
+
+        </td>
+      </tr>
+    </table>
+
+
+    <table class="invoice-items">
+
+      <thead>
         <tr>
-          <td><?=$perusahaan->telp?></td>
-        </tr>
-      </table>
-    </td>
-    <td>
-      <table>
-        <tr>
-          <td>No.Invoice</td>
-          <td>:</td>
-          <td><?=$pesanan->no_invoice?></td>
-        </tr>
-        <tr>
-          <td>Date</td>
-          <td>:</td>
-          <td><?=date('d M Y',strtotime($pesanan->tgl_pinjam))?></td>
-        </tr>
-      </table>
-    </td>
-  </tr>
-  <tr>
-    <td align="center">
-
-    <table >
-        <tr >
-          <td>Customer</td>
-          <td>:</td>
-          <td><h3><?=$pesanan->id_pemesan?></h3></td>
-        </tr>
-
-      </table>
-
-    </td>
-  </tr>
-</table>
-   
-
-    <table class="invoice-items" >
-       
-      <thead >
-        <tr >
 
           <th style="background-color: #76b5c5; text-align: center">No</th>
-          <th style="background-color: #76b5c5; text-align: center">Kode Booking</th>
+          <!-- <th style="background-color: #76b5c5; text-align: center">Kode Booking</th> -->
           <th style="background-color: #76b5c5; text-align: center">Deskripsi</th>
           <th style="background-color: #76b5c5; text-align: center">Qty</th>
           <th style="background-color: #76b5c5; text-align: center">Unit Price</th>
           <th style="background-color: #76b5c5; text-align: center">Total</th>
         </tr>
       </thead>
-      <tbody >
+      <tbody>
         <?php
-        $no=1;
-        $tot=0;
+        $no = 1;
+        $tot = 0;
         while ($pid = $pesananid->fetch_object()) :
-         // $tot=$tot+($pid->price*$pid->qty);
+          // $tot=$tot+($pid->price*$pid->qty);
         ?>
-        <tr >
-          <td style="vertical-align: top;"><?=$no++?></td>
-          <td ><?=$pesanan->booking_code?></td>
-          <td width='50%'><?=$pid->deskripsi?></td>
-          <td style="vertical-align: top;"><?=number_format($pid->qty,0,',','.')?></td>
-          <td style="text-align: right; vertical-align: top;"><?=number_format($pid->price/$pid->qty,0,',','.')?></td>
-          <td style="text-align: right; vertical-align: top;"><?=number_format($pid->price,0,',','.')?></td>
+          <tr>
+            <td style="vertical-align: top;"><?= $no++ ?></td>
+            <!-- <td ><?= $pesanan->booking_code ?></td> -->
+            <td width='50%'><?= $pesanan->booking_code ?> <br> <?= $pid->deskripsi ?></td>
+            <td style="vertical-align: top;"><?= number_format($pid->qty, 0, ',', '.') ?></td>
+            <td style="text-align: right; vertical-align: top;"><?= number_format($pid->price / $pid->qty, 0, ',', '.') ?></td>
+            <td style="text-align: right; vertical-align: top;"><?= number_format($pid->price, 0, ',', '.') ?></td>
+          </tr>
+        <?php endwhile; ?>
+        <tr>
+          <td colspan="4" style="text-align: center;"><B>TOTAL</b></td>
+          <td style="text-align: right;"><b><?= number_format($pesanan->harga, 0, ',', '.') ?></b></td>
         </tr>
-        <?php endwhile;?>
-      <tr>
-        <td colspan="5" style="text-align: center;"><B>TOTAL</b></td>
-        <td style="text-align: right;"><b><?=number_format($pesanan->harga,0,',','.')?></b></td>
-      </tr>
       </tbody>
     </table>
-    <table>
+    <table style="width: 100%;" border="0">
+    <tr>
+        <td>Total - Uang Muka = Sisa Pembayaran</td>
+      </tr>
       <tr>
-        <td>Transfer :<br><?=$perusahaan->account?></td>
+        <td><?= number_format($pesanan->harga, 0, ',', '.') ?> - <?= number_format($pesanan->uang_muka, 0, ',', '.') ?> =  <b><?= number_format($pesanan->harga-$pesanan->uang_muka, 0, ',', '.') ?></b></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+      </tr>
+     
+      <tr>
+        <td>Transfer :<br><?= $perusahaan->account ?></td>
       </tr>
       <tr>
         <td>&nbsp;</td>
       </tr>
       <tr>
-        <td>Medan <?=date('d M Y')?><br>Hormat Kami,</td>
+        <td>Medan <?= date('d M Y') ?><br>Hormat Kami,</td>
       </tr>
     </table>
     <div class="invoice-total">
-    <table>
+      <table>
         <tr>
-            <td>
-    <div style="text-align: left;">
-      <img src="<?=base_url()?>uploads/perusahaan/<?=$perusahaan->logo?>"><br>
-      <?=$perusahaan->owner?>
-    </div></td>
+          <td>
+            <div style="text-align: left;">
+              <img src="<?= base_url() ?>uploads/perusahaan/<?= $perusahaan->logo ?>"><br>
+              <?= $perusahaan->owner ?>
+            </div>
+          </td>
         </tr>
-    </table>
+      </table>
     </div>
     <br>
-    
-    
+
+
   </div>
+  <?php
+  while ($pesanan = $listfile->fetch_object()) :
+  ?>
+    <!-- <object data="<?=BASE_URL?>files/<?= $pesanan->namafile ?>" type="application/pdf" width="100%" height="500px">
+      <p>Unable to display PDF file. <a href="/uploads/media/default/0001/01/540cb75550adf33f281f29132dddd14fded85bfc.pdf">Download</a> instead.</p>
+    </object> -->
+    <!-- <iframe src="<?=BASE_URL?>files/<?= $pesanan->namafile ?>" style="width:100%; height:500px;" frameborder="0"></iframe> -->
+    <img src="<?=BASE_URL?>files/<?= $pesanan->namafile ?>" style="width:100%; height:100%;">
+  <?php endwhile; ?>
 </body>
+
 </html>

@@ -149,13 +149,13 @@
 													</select>
 												</div>
 											</div>
-											<!-- <div class="col-md-6">
+											<div class="col-md-6">
 												<div class="form-group">
-													<label for="harga">Harga</label>
-													<input type="text" maxlength="15" disabled onkeyup="FormatCurrency(this)" style="text-align: right;" name="harga2" id="harga2" value="<?= number_format($pesanan->harga, 0, ',', '.') ?>" placeholder="ketik" required="required" autocomplete="off" class="form-control">
-													<input type="hidden" maxlength="15" onkeyup="FormatCurrency(this)" style="text-align: right;" name="harga" id="harga" value="<?= number_format($pesanan->harga, 0, ',', '.') ?>" placeholder="ketik" required="required" autocomplete="off" class="form-control">
+													<label for="harga">Uang Muka</label>
+													<input type="text" maxlength="15"  onkeyup="FormatCurrency(this)" style="text-align: right;" name="uang_muka" id="uang_muka" value="<?= number_format($pesanan->uang_muka, 0, ',', '.') ?>" placeholder="ketik" required="required" autocomplete="off" class="form-control">
+													
 												</div>
-											</div> -->
+											</div>
 										</div>
 
 										<div class="row">

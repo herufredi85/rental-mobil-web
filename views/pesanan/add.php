@@ -121,13 +121,13 @@
 													</select>
 												</div>
 											</div>
-											<!-- <div class="col-md-6">
+											<div class="col-md-6">
 								  			<div class="form-group">
-										  		<label for="harga">Total Harga</label>
-                                                  <input type="text" maxlength="15" readonly  onkeyup="FormatCurrency(this)" style="text-align: right;"  name="harga2" id="harga2" placeholder="ketik" required="required" autocomplete="off" class="form-control">
-										  		<input type="hidden" maxlength="15"  onkeyup="FormatCurrency(this)" style="text-align: right;"  name="harga" id="harga" placeholder="ketik" required="required" autocomplete="off" class="form-control">
+										  		<label for="harga">Uang Muka</label>
+                                                  <input type="text" maxlength="15"  onkeyup="FormatCurrency(this)" style="text-align: right;"  name="uang_muka" id="uang_muka" placeholder="ketik" required="required" autocomplete="off" class="form-control">
+										  		
 										  	</div>
-								  		</div> -->
+								  		</div>
 										</div>
 
 										<div class="row">

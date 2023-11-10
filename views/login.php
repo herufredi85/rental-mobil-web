@@ -35,27 +35,31 @@
 									<div class="text-center">
 										<h1 class="h4 text-gray-900 mb-4">Aplikasi Rental Mobil</h1>
 									</div>
-									<?php if(checkSession('success')): ?>
+									<?php if (checkSession('success')) : ?>
 										<div class="alert alert-success alert-dismissible fade show" role="alert">
-								  			<?= getSession('success', true) ?>
-								  			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-								    			<span aria-hidden="true">&times;</span>
-								  			</button>
+											<?= getSession('success', true) ?>
+											<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+												<span aria-hidden="true">&times;</span>
+											</button>
 										</div>
-									<?php elseif(checkSession('error')): ?>
+									<?php elseif (checkSession('error')) : ?>
 										<div class="alert alert-danger alert-dismissible fade show" role="alert">
-								  			<?= getSession('error', true) ?>
-								  			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-								    			<span aria-hidden="true">&times;</span>
-								  			</button>
+											<?= getSession('error', true) ?>
+											<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+												<span aria-hidden="true">&times;</span>
+											</button>
 										</div>
 									<?php endif ?>
 									<form class="user" method="POST" action="<?= base_url('auth/login') ?>">
 										<div class="form-group">
-											<input type="text" class="form-control form-control-user" name="username" placeholder="username : admin" autocomplete="off" required="required" autofocus>
+											<input type="text" class="form-control form-control-user" name="username" autocomplete="off" required="required" placeholder="username" autofocus>
 										</div>
 										<div class="form-group">
-											<input type="password" class="form-control form-control-user" name="password" placeholder="password : admin" required="required">
+											<input type="password" class="form-control form-control-user" name="password" required="required" placeholder="password">
+										</div>
+										<div class="form-group" style="text-align: center;">
+											<img src="<?=base_url("captcha")?>" alt="Captcha" width="30%"><br>
+											<input type="text" name="captcha" id="captcha" class="form-control form-control-user" placeholder="input captcha" required><br><br>
 										</div>
 										<button class="btn btn-primary btn-user btn-block" name="login">Login</button>
 									</form>

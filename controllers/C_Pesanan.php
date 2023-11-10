@@ -117,7 +117,7 @@ class C_Pesanan extends Controller {
 		$tgl_pinjam=date('Y-m-d',strtotime($this->req->post('tgl_pinjam')));
 		$tgl_kembali=date('Y-m-d',strtotime($this->req->post('tgl_kembali')));
 		$pemesan=explode("|",$this->req->post('id_pemesan'));
-		
+		$uang_muka=str_replace('.', '', $this->req->post('uang_muka'));
 		
 
 		$data = [
@@ -127,6 +127,7 @@ class C_Pesanan extends Controller {
 			'id_perjalanan' => $this->req->post('id_perjalanan'),
 			'id_jenis_bayar' => $this->req->post('id_jenis_bayar'),
 			'harga' => $harga,
+			'uang_muka' => $uang_muka,
 			'tgl_pinjam' => $tgl_pinjam,
 			'tgl_kembali' => $tgl_kembali,
 			'id_perusahaanref'=>$_SESSION['login']['id_perusahaanref']
@@ -205,14 +206,17 @@ class C_Pesanan extends Controller {
 		$harga=str_replace('.', '', $this->req->post('totalharga'));
 		$tgl_kembali=date('Y-m-d',strtotime($this->req->post('tgl_kembali')));
 		$pemesan=explode("|",$this->req->post('id_pemesan'));
+		$uang_muka=str_replace('.', '', $this->req->post('uang_muka'));
 		$data = [
 			'id_pemesan' => $pemesan[1],
 			'id_jenis_bayar'=> $this->req->post('id_jenis_bayar'),
 			'id_perjalanan' => $this->req->post('id_perjalanan'),
 			'harga' => $harga,
+			'uang_muka' => $uang_muka,
 			'no_invoice' => $this->req->post('no_invoice'),
 			'booking_code' => $this->req->post('booking_code'),
 			'tgl_kembali' => $tgl_kembali,
+			
 		];
 		$this->pesanan->hapusdetail($id);
 		$count=count($_POST['deskripsi']);
@@ -300,9 +304,21 @@ class C_Pesanan extends Controller {
 			'pesanan' => $this->pesanan->detail($id)->fetch_object(),
 			'pesananid' => $this->pesanan->detailid($id),
 			'perusahaan' => $this->perusahaan->lihat()->fetch_object(),
+			'listfile' => $this->pesanan->listfile($id),
 		];
 
 		$this->view('pesanan/invoice', $data);
+	}
+
+	public function invoicekosong(){
+	
+
+		$data = [
+			'perusahaan' => $this->perusahaan->lihat()->fetch_object(),
+			'cb'=> $this->pesanan->generate_cb(),
+		];
+
+		$this->view('pesanan/invoicekosong', $data);
 	}
 
 	public function uploadfile($id,$tglstart,$tglend){
@@ -314,12 +330,16 @@ class C_Pesanan extends Controller {
 		$asal = $_FILES['filelampiran'.$id]['tmp_name'];
 		$ekstensi = pathinfo($_FILES['filelampiran'.$id]['name'], PATHINFO_EXTENSION);
 		$error = $_FILES['filelampiran'.$id]['error'];
+		// echo $ekstensi;
+		// exit();
 
+		if($ekstensi =='jpg' or $ekstensi =='png' or $ekstensi =='jpeg' or $ekstensi =='gif'){
 
 		$img_name = $id;
 		$img_name = strtolower($img_name);
 		$img_name = str_replace(' ', '-', $img_name);
 		$img_name = $img_name . '-' . time();
+
 
 			if(file_exists($upload_dir . $img_name . '.' . $ekstensi)) unlink($upload_dir . $img_name . '.' . $ekstensi);
 			
@@ -341,5 +361,9 @@ class C_Pesanan extends Controller {
 			setSession('error', 'Data gagal ditambahkan!');
 			redirect('pesanan/indextgl/'.$tglstart."/".$tglend);
 		}
+	}else{
+		setSession('error', 'File harus gambar');
+			redirect('pesanan/indextgl/'.$tglstart."/".$tglend);
+	}
 	}
 }

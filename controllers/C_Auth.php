@@ -22,6 +22,12 @@ class C_Auth extends Controller{
 	public function login(){
 		if(!isset($_POST['login'])) redirect();
 		else {
+			$captcha = $this->req->post('captcha');
+			if ($_SESSION['captcha'] !== $captcha) {
+				//die("Verifikasi captcha gagal.");
+				setSession('error', 'Verifikasi captcha gagal.');
+				redirect();
+			}else{
 			$username = $this->req->post('username');
 			$password = $this->req->post('password');
 
@@ -48,6 +54,7 @@ class C_Auth extends Controller{
 				setSession('error', 'Username tidak ditemukan!');
 				redirect();
 			}
+		}
 		}
 	}
 
