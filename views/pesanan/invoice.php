@@ -87,7 +87,10 @@
             </tr>
             <tr>
 
-              <td><?= $perusahaan->alamat ?></td>
+              <td><?= $perusahaan->alamat ?>
+           
+              <??>
+            </td>
             </tr>
             <tr>
               <td><?= $perusahaan->telp ?></td>
@@ -104,7 +107,7 @@
             <tr>
               <td>Date</td>
               <td>:</td>
-              <td><?= date('d M Y', strtotime($pesanan->tgl_pinjam)) ?></td>
+              <td><?= date('d M Y', strtotime( substr($pesanan->no_invoice,13)."-".substr($pesanan->no_invoice,10,2)."-".substr($pesanan->no_invoice,7,2))) ?></td>
             </tr>
           </table>
         </td>
@@ -164,12 +167,14 @@
       </tbody>
     </table>
     <table style="width: 100%;" border="0">
+    <?php if(!empty($pesanan->uang_muka)) {?>
     <tr>
         <td>Total - Uang Muka = Sisa Pembayaran</td>
       </tr>
       <tr>
         <td><?= number_format($pesanan->harga, 0, ',', '.') ?> - <?= number_format($pesanan->uang_muka, 0, ',', '.') ?> =  <b><?= number_format($pesanan->harga-$pesanan->uang_muka, 0, ',', '.') ?></b></td>
       </tr>
+      <?php } ?>
       <tr>
         <td>&nbsp;</td>
       </tr>
