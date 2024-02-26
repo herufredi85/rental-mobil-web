@@ -30,7 +30,7 @@ class C_Gantipassword extends Controller {
 		$username=$_SESSION['login']['username'];
 		if($_POST['password'] !== $_POST['password2']) {
 			setSession('error', 'Password tidak sama!');
-			redirect('akun');
+			redirect('gantipassword');
 		} else {
 
 			$akun = $this->akun->cek_login($username);
